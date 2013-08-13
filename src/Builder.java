@@ -44,24 +44,30 @@ public class Builder {
 						curr_block.file = file;
 						curr_block.action = line.substring(1).trim();
 						continue;
-					} else if (line.contains("{")) {
-						if(curr_block.selector.length() > 0) {
+					} 
+					// opening brackets mean its a selector of some kind
+					else if (line.contains("{")) {
+						// if we found an opening bracket and selector already populated then we probably have a nested selector
+						if(curr_block.selector.length() > 0 && bracket_count > 0) {
 							curr_block.selector += "\n" + line;
 							curr_block.selector_type = "nested";
 						}
+						// otherwise its probably a single
 						else {
 							curr_block.selector += line;
-							curr_block.selector_type = "single";
+							if(curr_block.selector.length() == 0) {
+								curr_block.selector_type = "single";
+							}
 						}
 						bracket_count++;
 						continue;
 					}
-					//multiline is trying to capture everything between the action and the {
+					// multiline is trying to capture everything between the action and the {
 					else if (curr_block.action.length() > 0 && bracket_count == 0) {
 						curr_block.selector += line + "\n";
 						curr_block.selector_type = "multiline";
 						continue;
-					}  else if (line.contains("}")) {
+					}else if (line.contains("}")) {
 						bracket_count--;
 						if (bracket_count == 0) {
 							curr_block.properties = curr_block_contents;
