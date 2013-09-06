@@ -17,16 +17,18 @@ public class Builder {
 	}
 
 	private static void findFiles(String path) {
-		File dir = new File(path);
-		for (File child : dir.listFiles()) {
-			readFile(child);
+//		File dir = new File(path);
+//		for (File child : dir.listFiles()) {
+//			readFile(child);
+//		}
+		readFile(new File("/var/www/bootstrap-kmulvey/less/shutterstock/dropdowns.less"));
 		}
-	}
 
 	private static void readFile(File file) {
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader(file));
+			SelectorList of = new SelectorList();
 			Block curr_block = new Block();
 			Variable var = new Variable();
 			String line, curr_block_contents = "";
@@ -48,30 +50,38 @@ public class Builder {
 					// opening brackets mean its a selector of some kind
 					else if (line.contains("{")) {
 						// if we found an opening bracket and selector already populated then we probably have a nested selector
-						if(curr_block.selector.length() > 0 && bracket_count > 0) {
-							curr_block.selector += "\n" + line;
-							curr_block.selector_type = "nested";
+						if(curr_block.selector_str.length() > 0 && bracket_count > 0) {
+							curr_block.selector_str += "\n" + line;
+							curr_block_contents += line;
+							curr_block.sel.addSelector(curr_block_contents);
+							curr_block_contents = "";
+						}
+						// close the multi
+						else if(curr_block.selector_str.length() > 0){
+							curr_block_contents += line;
+							curr_block.sel.addSelector(curr_block_contents);
+							curr_block_contents = "";
 						}
 						// otherwise its probably a single
 						else {
-							curr_block.selector += line;
-							if(curr_block.selector.length() == 0) {
-								curr_block.selector_type = "single";
-							}
+							curr_block.selector_str = line;
+							curr_block.sel.addSelector(line);
 						}
 						bracket_count++;
 						continue;
 					}
 					// multiline is trying to capture everything between the action and the {
-					else if (curr_block.action.length() > 0 && bracket_count == 0) {
-						curr_block.selector += line + "\n";
-						curr_block.selector_type = "multiline";
+					else if (curr_block.action != null && bracket_count == 0) {
+						curr_block.selector_str += line + "\n";
+						curr_block_contents += line;
 						continue;
 					}else if (line.contains("}")) {
 						bracket_count--;
 						if (bracket_count == 0) {
 							curr_block.properties = curr_block_contents;
-							actionRouter(curr_block);
+							curr_block_contents = "";
+							of.addBlock(curr_block);
+//							actionRouter(curr_block);
 						}
 					} else if (bracket_count != 0) {
 						curr_block_contents += line += "\n";
@@ -130,13 +140,13 @@ public class Builder {
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
 			String line = null;
-			
+/*			
 			// single line selector
 			if(b.selector_type == "single"){
 				int bracket_count = 0;
 				while ((line = br.readLine()) != null) {
 					if (line.trim().length() > 0) {
-						if (line.trim().contains(b.selector)) {
+						if (line.trim().contains(b.sel)) {
 							if(line.contains("{")) bracket_count++;
 							continue;
 						} else if (bracket_count > 0 && line.contains("{")) {
@@ -156,8 +166,8 @@ public class Builder {
 			// multiline line selector
 			else if(b.selector_type == "multiline"){
 				String[] sel_arr = null;
-				if(b.selector.contains("\n")){
-					sel_arr = b.selector.split("\n");
+				if(b.sel.contains("\n")){
+					sel_arr = b.sel.split("\n");
 				}
 				int bracket_count = 0, i = 0, sel_line = -1;
 				while ((line = br.readLine()) != null) {
@@ -188,7 +198,7 @@ public class Builder {
 					i++;
 				}
 			}
-			
+*/			
 			pw.close();
 			br.close();
 
