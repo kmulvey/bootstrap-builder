@@ -6,10 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 public class Builder {
-	static String overrides = "/var/www/bootstrap-kmulvey/less/shutterstock";
+	static String overrides = "/var/www/bootstrap-twbs/less/shutterstock";
 	static String originals = "/var/www/bootstrap-kmulvey/less";
 
 	public static void main(String[] args) {
@@ -63,7 +62,7 @@ public class Builder {
 						continue;
 					}
 					// multiline is trying to capture everything between the action and the {
-					else if (curr_block.action.length() > 0 && bracket_count == 0) {
+					else if (curr_block.action != null && bracket_count == 0) {
 						curr_block.selector += line + "\n";
 						curr_block.selector_type = "multiline";
 						continue;

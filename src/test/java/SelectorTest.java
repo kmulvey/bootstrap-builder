@@ -15,7 +15,7 @@ public class SelectorTest {
 	private String multiline = ".dropdown-menu li > a:hover,\n .dropdown-menu li > a:focus,\n .dropdown-submenu:hover > a {\n}";
 	// Nested
 	private String nested = ".dropdown-menu {\n	&.pull-right {\n	}\n}";
-	private String nestedMultiline = ".dropdown-menu li > a:hover,\n.dropdown-menu li > a:focus,\n.dropdown-submenu:hover > a {\n&.pull-right {\n}}\n";
+	private String nestedMultiline = ".dropdown-menu li > a:hover,\n.dropdown-menu li > a:focus,\n.dropdown-submenu:hover > a {\n&.pull-right {\n color: #333;}}\n";
 	
 	@Test
   public void testSingle() {
