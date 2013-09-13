@@ -20,7 +20,7 @@ public class Builder {
 //		for (File child : dir.listFiles()) {
 //			readFile(child);
 //		}
-		readFile(new File("/var/www/bootstrap-kmulvey/less/shutterstock/dropdowns.less"));
+		readFile(new File("/var/www/bootstrap-twbs/less/shutterstock/wells.less"));
 		}
 
 	private static void readFile(File file) {
@@ -35,17 +35,28 @@ public class Builder {
 
 			while ((line = br.readLine()) != null) {
 				if (line.trim().length() > 0) {
-					if (line.trim().length() > 0 && line.charAt(0) == '@') {
+					// comments
+					if(line.startsWith("//")) continue;
+					
+					// a css property
+					else if(line.contains(";")) System.out.println("prob a prop: " + line);
+					
+					// a less variable
+					else if (line.charAt(0) == '@') {
 						var = new Variable();
 						var.file = file;
 						var.name = line.substring(1, line.indexOf("=")).trim();
 						continue;
-					} else if (line.charAt(0) == '!') {
+					} 
+					
+					// a less block annotation
+					else if (line.charAt(0) == '!') {
 						curr_block = new Block();
 						curr_block.file = file;
 						curr_block.action = line.substring(1).trim();
 						continue;
 					} 
+					
 					// opening brackets mean its a selector of some kind
 					else if (line.contains("{")) {
 						// if we found an opening bracket and selector already populated then we probably have a nested selector
@@ -87,6 +98,7 @@ public class Builder {
 					}
 				}
 			}
+			System.out.println("apples");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
