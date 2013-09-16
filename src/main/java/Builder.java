@@ -20,14 +20,14 @@ public class Builder {
 //		for (File child : dir.listFiles()) {
 //			readFile(child);
 //		}
-		readFile(new File("/var/www/bootstrap-twbs/less/shutterstock/wells.less"));
+		readFile(new File("/var/www/workspace/bootstrap-builder/src/test/less/wells.less"));
 		}
 
 	private static void readFile(File file) {
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader(file));
-			SelectorList of = new SelectorList();
+			BinaryTree bt = new BinaryTree();
 			Block curr_block = new Block();
 			Variable var = new Variable();
 			String line, curr_block_contents = "";
@@ -39,7 +39,7 @@ public class Builder {
 					if(line.startsWith("//")) continue;
 					
 					// a css property
-					else if(line.contains(";")) System.out.println("prob a prop: " + line);
+					else if(line.contains(";")) curr_block_contents += line;
 					
 					// a less variable
 					else if (line.charAt(0) == '@') {
@@ -59,30 +59,24 @@ public class Builder {
 					
 					// opening brackets mean its a selector of some kind
 					else if (line.contains("{")) {
-						// if we found an opening bracket and selector already populated then we probably have a nested selector
-						if(curr_block.selector_str.length() > 0 && bracket_count > 0) {
-							curr_block.selector_str += "\n" + line;
-							curr_block_contents += line;
-							curr_block.sel.addSelector(curr_block_contents);
-							curr_block_contents = "";
-						}
-						// close the multi
-						else if(curr_block.selector_str.length() > 0){
-							curr_block_contents += line;
-							curr_block.sel.addSelector(curr_block_contents);
-							curr_block_contents = "";
+						// another opening bracket?!? probably a nested
+						if(bracket_count > 0) {
+							curr_block.addChild();
+							curr_block.child.setFile(file);
+							curr_block.child.setSelector(line);
 						}
 						// otherwise its probably a single
 						else {
-							curr_block.selector_str = line;
-							curr_block.sel.addSelector(line);
+							curr_block = new Block();
+							curr_block.file = file;
+							curr_block.selector = line;
 						}
 						bracket_count++;
 						continue;
 					}
 					// multiline is trying to capture everything between the action and the {
 					else if (curr_block.action != null && bracket_count == 0) {
-						curr_block.selector_str += line + "\n";
+						curr_block.selector += line + "\n";
 						curr_block_contents += line;
 						continue;
 					}else if (line.contains("}")) {
@@ -90,7 +84,7 @@ public class Builder {
 						if (bracket_count == 0) {
 							curr_block.properties = curr_block_contents;
 							curr_block_contents = "";
-							of.addBlock(curr_block);
+							bt.insert(curr_block);
 //							actionRouter(curr_block);
 						}
 					} else if (bracket_count != 0) {
