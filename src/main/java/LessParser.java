@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class FileParser {
+public class LessParser {
 	String file;
 	ArrayList<LessObject> lessFile;
 
-	public FileParser(String f) {
+	public LessParser(String f) {
 		file = f;
 		lessFile = new ArrayList<LessObject>();
 	}
 
-	public void parse() {
+	public void parseLess() {
 		String buffer = "";
-		Stack depth_stack = new Stack();
+		Stack<Block> depth_stack = new Stack<Block>();
 		Block curr_block = null, temp_block = null;
 		int paren_count = 0, curly_count = 0;
 		
@@ -26,6 +26,7 @@ public class FileParser {
 					depth_stack.push(curr_block);
 				}
 				curr_block = new Block(buffer);
+				curr_block.action = detectOverride(buffer);
 				buffer = "";
 				curly_count++;
 			}
@@ -39,7 +40,7 @@ public class FileParser {
 				}
 				else if(curly_count > 0){
 					temp_block = curr_block;
-					curr_block = (Block) depth_stack.pop(); // TODO: this cast is prob broken
+					curr_block = depth_stack.pop();
 					curr_block.children.add(temp_block);
 				}	
 				else{
@@ -68,5 +69,13 @@ public class FileParser {
 				buffer += c;
 			}
 		}
+		System.out.println("done");
+	}
+	
+	public String detectOverride(String less) {
+		less=less.trim();
+		if(less.startsWith("-")) return "remove";
+		else if(less.startsWith("+")) return "add";
+		return "";
 	}
 }
