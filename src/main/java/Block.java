@@ -7,6 +7,7 @@ public class Block extends LessObject{
 	
 	public Block(String sel){
 		selector = sel;
+		children = new ArrayList<LessObject>();
 	}
 
 }

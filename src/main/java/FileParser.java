@@ -7,6 +7,7 @@ public class FileParser {
 
 	public FileParser(String f) {
 		file = f;
+		lessFile = new ArrayList<LessObject>();
 	}
 
 	public void parse() {
@@ -28,11 +29,13 @@ public class FileParser {
 				buffer = "";
 				curly_count++;
 			}
-			if (c == '}') {
+			else if (c == '}') {
 				curly_count--;
 				
+				// down periscope CLIMB CLIMB CLIMB
 				if(depth_stack.empty() && curly_count == 0){
 					lessFile.add(curr_block);
+					curr_block = null;
 				}
 				else if(curly_count > 0){
 					temp_block = curr_block;
@@ -49,12 +52,16 @@ public class FileParser {
 			else if (c == ';' && paren_count == 0) {
 				Property prop = new Property(buffer);
 				curr_block.children.add(prop);
+				buffer = "";
 			}
 			// ignore ; inside () --- mixins
 			else if (c == '(') {
 				paren_count++;
+				buffer += c;
+				
 			} else if (c == ')') {
 				paren_count--;
+				buffer += c;
 			}
 			// push on to buffer
 			else {
