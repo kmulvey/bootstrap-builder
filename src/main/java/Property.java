@@ -1,7 +1,6 @@
 public class Property extends LessObject {
 	String name;
 	String value;
-	String action;
 
 	public Property(String prop) {
 		prop = prop.trim();

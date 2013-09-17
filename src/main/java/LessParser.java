@@ -15,7 +15,7 @@ public class LessParser {
 		Stack<Block> depth_stack = new Stack<Block>();
 		Block curr_block = null, temp_block = null;
 		int paren_count = 0, curly_count = 0;
-		
+
 		for (int i = 0; i < file.length(); i++) {
 			char c = file.charAt(i);
 
@@ -29,21 +29,18 @@ public class LessParser {
 				curr_block.action = detectOverride(buffer);
 				buffer = "";
 				curly_count++;
-			}
-			else if (c == '}') {
+			} else if (c == '}') {
 				curly_count--;
-				
+
 				// down periscope CLIMB CLIMB CLIMB
-				if(depth_stack.empty() && curly_count == 0){
+				if (depth_stack.empty() && curly_count == 0) {
 					lessFile.add(curr_block);
 					curr_block = null;
-				}
-				else if(curly_count > 0){
+				} else if (curly_count > 0) {
 					temp_block = curr_block;
 					curr_block = depth_stack.pop();
 					curr_block.children.add(temp_block);
-				}	
-				else{
+				} else {
 					System.out.println("something went wrong closing a block");
 					System.out.println("stack size: " + depth_stack.size());
 					System.out.println("curly count: " + curly_count);
@@ -59,7 +56,7 @@ public class LessParser {
 			else if (c == '(') {
 				paren_count++;
 				buffer += c;
-				
+
 			} else if (c == ')') {
 				paren_count--;
 				buffer += c;
@@ -71,11 +68,32 @@ public class LessParser {
 		}
 		System.out.println("done");
 	}
-	
+
 	public String detectOverride(String less) {
-		less=less.trim();
-		if(less.startsWith("-")) return "remove";
-		else if(less.startsWith("+")) return "add";
+		less = less.trim();
+		if (less.startsWith("-"))
+			return "remove";
+		else if (less.startsWith("+"))
+			return "add";
 		return "";
+	}
+
+	public String toString() {
+		StringBuilder file = new StringBuilder();
+
+		for (int i = 0; i < lessFile.size(); i++) {
+			if (lessFile.get(i) instanceof Block) {
+				Block curr_block = (Block) lessFile.get(i);
+				
+				// print selector
+				file.append(curr_block.selector).append("{");
+				
+			} else if (lessFile.get(i) instanceof Property) {
+
+			}
+
+		}
+
+		return file.toString();
 	}
 }
