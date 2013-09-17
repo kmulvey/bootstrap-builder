@@ -3,10 +3,10 @@ import java.util.ArrayList;
 
 public class Block extends LessObject{
 	String selector;
-	ArrayList<LessObject> child;
+	ArrayList<LessObject> children;
 	
-	public Block(){
-	
+	public Block(String sel){
+		selector = sel;
 	}
 
 }
