@@ -66,7 +66,6 @@ public class LessParser {
 				buffer += c;
 			}
 		}
-		System.out.println("done");
 	}
 
 	public String detectOverride(String less) {
@@ -82,18 +81,24 @@ public class LessParser {
 		StringBuilder file = new StringBuilder();
 
 		for (int i = 0; i < lessFile.size(); i++) {
-			if (lessFile.get(i) instanceof Block) {
-				Block curr_block = (Block) lessFile.get(i);
-				
-				// print selector
-				file.append(curr_block.selector).append("{");
-				
-			} else if (lessFile.get(i) instanceof Property) {
-
-			}
-
+			file.append(printBlock((Block) lessFile.get(i)));
 		}
 
 		return file.toString();
+	}
+
+	public String printBlock(Block b) {
+		StringBuilder block_str = new StringBuilder();
+		block_str.append(b.selector + "{");
+		for (int i = 0; i < b.children.size(); i++) {
+			if (b.children.get(i) instanceof Block)
+				printBlock((Block) b.children.get(i)); // if its a block recursively process it
+			else {
+				Property p = (Property) b.children.get(i);
+				block_str.append(p.name);
+				block_str.append(p.value);
+			}
+		}
+		return block_str.toString();
 	}
 }
