@@ -6,7 +6,18 @@ public class Block extends LessObject{
 	ArrayList<LessObject> children;
 	
 	public Block(String sel){
-		selector = sel;
+		sel = sel.trim();
+		
+		if(sel.startsWith("-")) {
+			action = "remove";
+			selector = sel.substring(1).trim();
+		}
+		else if(sel.startsWith("+")) {
+			action = "add";
+			selector = sel.substring(1).trim();
+		}
+		else selector = sel;
+		
 		children = new ArrayList<LessObject>();
 	}
 

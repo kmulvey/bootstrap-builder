@@ -1,6 +1,7 @@
 public class Property extends LessObject {
 	String name;
 	String value;
+	boolean mixin = false;
 
 	public Property(String prop) {
 		prop = prop.trim();
@@ -8,6 +9,7 @@ public class Property extends LessObject {
 		if (prop.startsWith(".") && prop.contains("(")) {
 			name = prop;
 			value = "";
+			mixin = true;
 		} else {
 			if(prop.startsWith("-")) {
 				action = "remove";

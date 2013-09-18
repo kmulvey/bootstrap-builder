@@ -11,7 +11,11 @@ public class FileUtilTest {
 	@Test
   public void readFileTest() {
 		FileUtil f = new FileUtil();
-		LessParser fp = new LessParser(f.readFile(new File("/var/www/workspace/bootstrap-builder/src/test/less/wells.less")));
+		//LessParser fp = new LessParser(f.readFile(new File("/var/www/workspace/bootstrap-builder/src/test/less/wells.less")));
+		LessParser fp = new LessParser(f.readFile(new File("/var/www/bootstrap-twbs/less/buttons.less")));
+
+		
 		fp.parseLess();
+		System.out.println(fp.toString());
 	}
 }

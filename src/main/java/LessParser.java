@@ -92,13 +92,14 @@ public class LessParser {
 		block_str.append(b.selector + "{");
 		for (int i = 0; i < b.children.size(); i++) {
 			if (b.children.get(i) instanceof Block)
-				printBlock((Block) b.children.get(i)); // if its a block recursively process it
+				block_str.append(printBlock((Block) b.children.get(i))); // if its a block recursively process it
 			else {
 				Property p = (Property) b.children.get(i);
-				block_str.append(p.name);
-				block_str.append(p.value);
+				if(p.mixin) block_str.append(p.name).append(";");
+				else block_str.append(p.name).append(": ").append(p.value).append(";");
 			}
 		}
+		block_str.append("}");
 		return block_str.toString();
 	}
 }
