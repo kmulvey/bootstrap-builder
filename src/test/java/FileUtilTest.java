@@ -20,5 +20,6 @@ public class FileUtilTest {
 		
 		LessMerger lm  = new LessMerger(orig, over);
 		lm.merge();
+		System.out.println(orig.toString());
 	}
 }

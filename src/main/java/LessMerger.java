@@ -1,49 +1,89 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class LessMerger {
-	ArrayList<LessObject> original;
-	ArrayList<LessObject> override;
+	Block original;
+	Block override;
+	List<Block> files;
+	Stack<String> tree;
+	String curr_action;
 
 	public LessMerger(LessParser orig, LessParser over) {
-		original = orig.lessFile;
-		override = over.lessFile;
+		original = new Block("original");
+		original.children = orig.lessFile;
+		
+		override = new Block("override");
+		override.children = over.lessFile;
+		tree = new Stack<String>();
 	}
 
 	public void merge() {
-		for (int i = 0; i < override.size(); i++) {
-			processBlock((Block) override.get(i));
-		}
+			processOverrideBlocks(override);
 	}
 
-	public void processBlock(Block b) {
-		ArrayList<String> tree = new ArrayList<String>();
+	public void processOverrideBlocks(Block b) {
+		Iterator<File> iterator = files.iterator();
 
 		for (int i = 0; i < b.children.size(); i++) {
 			tree.add(b.selector);
 			if (b.children.get(i) instanceof Block) {
-				// Block b = (Block) b.children.get(i);
-				// if(b.action == "add"){
-				//
-				// }
-				// processBlock((Block) b.children.get(i));
+				Block curr_block = (Block) b.children.get(i);
+				if (curr_block.action.equals("remove")) {
+					curr_action = "remove";
+					//findBlock(original);
+				}
+				else if (curr_block.action.equals("add")) {
+					curr_action = "add";
+					//findBlock(original);
+				}
+				// only props in here
+				else
+					processOverrideBlocks((Block) b.children.get(i));
 			} else {
 				Property p = (Property) b.children.get(i);
-				if (p.action == "-")
-					b.children.remove(i);
-				else if (p.action == "+")
-					b.children.add(p);
+				if (p.action.equals("add")){
+					curr_action = "remove";
+					findBlock(original, p);
+				}
+				else if (p.action.equals("remove")){
+					curr_action = "add";
+					findBlock(original, p);
+				}
 			}
 		}
 	}
 
-	public void removeProperty(ArrayList<String> tree, Property p) {
-		for (int j = 0; j < original.size(); j++) {
-			if (original.get(j) instanceof Block) {
-				Block curr = (Block) original.get(j);
-				if (curr.selector == tree.get(tree.size() - 1)) {
-					tree.remove(tree.size() - 1)
+	public boolean findBlock(Block b, Property p){
+		tree.remove("override");
+		for (int i = 0; i < b.children.size(); i++) {
+			if (b.children.get(i) instanceof Block) {
+				Block curr_block = (Block) b.children.get(i);
+				if(curr_block.selector.equals(tree.firstElement())){
+					tree.remove(tree.firstElement());
+					if(tree.size() > 0)
+						findBlock(curr_block, p);
+					else if(tree.size() == 0){
+						if(p.action.equals("add")){
+							curr_block.children.add(p);
+							return true;
+						}
+						else if(p.action.equals("remove")){
+							for (int j = 0; j < curr_block.children.size(); j++) {
+								if(curr_block.children.get(j) instanceof Property){
+									Property curr_prop = (Property) curr_block.children.get(j);
+									if(curr_prop.name.equals(p.name) && curr_prop.value.equals(p.value)){
+										curr_block.children.remove(j);
+										return true;
+									}
+								}
+							}
+						}
+							
+					}
 				}
 			}
 		}
+		return false;
 	}
 }
