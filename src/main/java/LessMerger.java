@@ -17,7 +17,7 @@ public class LessMerger {
 	}
 
 	public void merge() {
-
+		// init the tree for recursive calling
 		Stack<String> tree = new Stack<String>();
 		processOverrideBlocks(override, tree);
 	}
@@ -30,18 +30,19 @@ public class LessMerger {
 			if (child instanceof Block) {
 				Block curr_block = (Block) child;
 				if (!curr_block.action.equals("")) {
-					findBlock(original, curr_block, (Stack<String>) tree.clone());
+					applyUpdates(original, curr_block, (Stack<String>) tree.clone());
 				}else{
 					processOverrideBlocks((Block) child, tree);
 				}				
 			} else {
-				findBlock(original, child, (Stack<String>) tree.clone());
+				// this is a property, i wish we didnt need this if block
+				applyUpdates(original, child, (Stack<String>) tree.clone());
 			}
 		}
 		tree.remove(tree.size() - 1);
 	}
 
-	public boolean findBlock(Block b, LessObject changes, Stack<String> tree) {
+	public boolean applyUpdates(Block b, LessObject changes, Stack<String> tree) {
 		logger.entry();
 		tree.remove("override");
 		for (int i = 0; i < b.children.size(); i++) {
@@ -55,7 +56,7 @@ public class LessMerger {
 
 						// Recursively go through all sub-blocks
 						if (tree.size() > 0)
-							findBlock(curr_block, changes, tree);
+							applyUpdates(curr_block, changes, tree);
 						else if (tree.size() == 0) {
 							// Process blocks
 							if (changes instanceof Block) {
@@ -112,20 +113,23 @@ public class LessMerger {
 							}
 						}
 					}
-				} else if (tree.size() == 0 && changes instanceof Block) {
+				} 
+				// this seems obtuse, basically this is for adding/removing blocks at the top level of the tree
+				else if (tree.size() == 0 && changes instanceof Block) {
 					Block change_bock = (Block) changes;
+					// add block to root level
 					if (change_bock.action.equals("add")) {
 						b.children.add(changes);
 						logger.info("added: " + change_bock.selector);
 						return logger.exit(true);
 					}
-					// removes
+					// remove block from root level
 					else if (change_bock.action.equals("remove")) {
-						// loop to find the correct prop
+						// loop to find the correct block to remove
 						for (int j = 0; j < b.children.size(); j++) {
 							if (b.children.get(j) instanceof Block) {
 								Block loop_block = (Block) b.children.get(j);
-								if (loop_block.selector.equals(change_bock.selector) && loop_block.selector.equals(change_bock.selector)) {
+								if (loop_block.selector.equals(change_bock.selector)) {
 									b.children.remove(j);
 									logger.info("removed: " + change_bock.selector);
 									return logger.exit(true);
