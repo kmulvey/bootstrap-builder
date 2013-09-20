@@ -1,4 +1,5 @@
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -22,16 +23,18 @@ public class FileUtilTest {
 	public void readFileTest() {
 		String expected = "this is a test file and its not empty.";
 		FileUtil f = new FileUtil();
-		File test_file = new File("/var/www/workspace/bootstrap-builder/src/test/resources/testfile.txt");
+		URL file_path = FileUtilTest.class.getResource("/testfile.txt");
+		File test_file = new File(file_path.getPath());
 		String file_contents = f.readFile(test_file);
 		Assert.assertEquals(expected, file_contents);
 	}
 	@Test
 	public void merge() {
 		FileUtil f = new FileUtil();
-		LessParser over = new LessParser(f.readFile(new File("/var/www/workspace/bootstrap-builder/src/test/resources/less/wells.less")));
-		LessParser orig = new LessParser(f.readFile(new File("/var/www/bootstrap-twbs/less/wells.less")));
-
+		URL src_path = FileUtilTest.class.getResource("/less/wells.orig.less");
+		LessParser orig = new LessParser(f.readFile(new File(src_path.getPath())));
+		URL override_path = FileUtilTest.class.getResource("/less/wells.less");
+		LessParser over = new LessParser(f.readFile(new File(override_path.getPath())));
 
 		over.parseLess();
 		orig.parseLess();
