@@ -1,49 +1,40 @@
 package utils;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FileUtil {
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
+public class FileUtil {
+	private Logger logger = LogManager.getLogger(FileUtil.class.getName());
+	
 	public FileUtil() {
 
 	}
 
-	private void findFiles(String path) {
+	public ArrayList<String> findFiles(String path) {
+		logger.entry();
+		ArrayList<String> files= new ArrayList<String>();
 		File dir = new File(path);
-		// for (File child : dir.listFiles()) {
-		// readFile(child);
-		// }
-		readFile(new File("/var/www/workspace/bootstrap-builder/src/test/less/buttons.less"));
+		 for (File child : dir.listFiles()) {
+			 files.add(child.getAbsolutePath());
+		 }
+		return logger.exit(files);
 	}
 
 	public String readFile(File f) {
-		BufferedReader br;
-		String line, result = "";
+		logger.entry();
+		String result = "";
 
 		try {
 			result = new Scanner(f).useDelimiter("\\Z").next();
 			result = result.replaceAll("//.*", "").replaceAll("\n", "");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.catching(e);
 		}
-		
-		
-//		try {
-//			br = new BufferedReader(new FileReader(f));
-//			while ((line = br.readLine()) != null) {
-//				if (!line.startsWith("//"))
-//					result += line;
-//			}
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		return result;
+		return logger.exit(result);
 	}
 }
