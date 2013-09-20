@@ -3,12 +3,10 @@ import java.util.Stack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import utils.FileUtil;
-
 public class LessMerger {
 	Block original;
 	Block override;
-	private Logger logger = LogManager.getLogger(FileUtil.class.getName());
+	private Logger logger = LogManager.getLogger(LessMerger.class.getName());
 
 	public LessMerger(LessParser orig, LessParser over) {
 		original = new Block("original");
@@ -31,12 +29,11 @@ public class LessMerger {
 			// this if else is used to determine if we need to recurse
 			if (child instanceof Block) {
 				Block curr_block = (Block) child;
-				if (curr_block.action != null) {
+				if (!curr_block.action.equals("")) {
 					findBlock(original, curr_block, (Stack<String>) tree.clone());
-				}
-				// only props in here
-				else
+				}else{
 					processOverrideBlocks((Block) child, tree);
+				}				
 			} else {
 				findBlock(original, child, (Stack<String>) tree.clone());
 			}
@@ -130,12 +127,12 @@ public class LessMerger {
 								Block loop_block = (Block) b.children.get(j);
 								if (loop_block.selector.equals(change_bock.selector) && loop_block.selector.equals(change_bock.selector)) {
 									b.children.remove(j);
-									logger.info("removed: " + b.selector);
+									logger.info("removed: " + change_bock.selector);
 									return logger.exit(true);
 								}
 							}
 						}
-						logger.warn("did not find: " + curr_block.selector);
+						logger.warn("did not find: " + change_bock.selector);
 						return logger.exit(false);
 					}
 				}
