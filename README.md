@@ -22,10 +22,10 @@ Bootstrap Builder allows you to create override files in a subdirectory of boots
 
 The format of this file looks similar to a diff file and tweaking an actual diff is a good way to get started.
 
-* **Remove a property**: line begins with a '-'
+* **Remove a property**: line begins with a '-':
 `- margin-left: 20px;`
 
-* **Add a property**: line begins with a '+'
+* **Add a property**: line begins with a '+':
 `+ background: #333;`
 
 * **Remove a block**: selector line begins with a '-'.  There is no need to give the contents of the block as we are simply going to find that selector and remove the whole thing.
@@ -71,3 +71,8 @@ The format of this file looks similar to a diff file and tweaking an actual diff
 -.well-small {
 }
 ```
+
+
+## Running tests
+
+* `mvn test` 
