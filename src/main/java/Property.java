@@ -21,8 +21,8 @@ public class Property extends LessObject {
 			}
 			
 			String[] property = prop.split(":");
-			name = property[0];
-			value = property[1];
+			name = property[0].trim();
+			value = property[1].trim();
 		}
 	}
 }
