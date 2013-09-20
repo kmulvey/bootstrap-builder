@@ -9,10 +9,10 @@ Bootstrap Builder allows you to create override files in a subdirectory of boots
 ## Prerequisites
 
 * java 7: [openjdk](http://openjdk.java.net/install/) or [oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* maven 3(https://maven.apache.org/download.cgi)
+* [maven 3](https://maven.apache.org/download.cgi)
+
 
 ## Quick start
 
-* 
 * Clone the repo: `git clone git@github.com:kmulvey/bootstrap-builder.git`.
 * `mvn install`
