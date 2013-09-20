@@ -26,5 +26,18 @@ public class FileUtilTest {
 		String file_contents = f.readFile(test_file);
 		Assert.assertEquals(expected, file_contents);
 	}
+	@Test
+	public void merge() {
+		FileUtil f = new FileUtil();
+		LessParser over = new LessParser(f.readFile(new File("/var/www/workspace/bootstrap-builder/src/test/resources/less/wells.less")));
+		LessParser orig = new LessParser(f.readFile(new File("/var/www/bootstrap-twbs/less/wells.less")));
 
+
+		over.parseLess();
+		orig.parseLess();
+
+		LessMerger lm  = new LessMerger(orig, over);
+		lm.merge();
+		System.out.println(orig.toString());
+	}
 }

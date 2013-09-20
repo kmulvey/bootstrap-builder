@@ -1,11 +1,14 @@
 import java.util.Stack;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import utils.FileUtil;
+
 public class LessMerger {
 	Block original;
 	Block override;
-
-	Stack<String> tree;
-	String curr_action;
+	private Logger logger = LogManager.getLogger(FileUtil.class.getName());
 
 	public LessMerger(LessParser orig, LessParser over) {
 		original = new Block("original");
@@ -13,45 +16,36 @@ public class LessMerger {
 
 		override = new Block("override");
 		override.children = over.lessFile;
-		tree = new Stack<String>();
 	}
 
 	public void merge() {
+
 		Stack<String> tree = new Stack<String>();
-		//tree.add("override");
 		processOverrideBlocks(override, tree);
 	}
 
 	public void processOverrideBlocks(Block b, Stack<String> tree) {
+		logger.entry();
 		tree.add(b.selector);
 		for (LessObject child : b.children) {
+			// this if else is used to determine if we need to recurse
 			if (child instanceof Block) {
 				Block curr_block = (Block) child;
-				if (curr_block.action.equals("remove")) {
-					curr_action = "remove";
-					// findBlock(original);
-				} else if (curr_block.action.equals("add")) {
-					curr_action = "add";
-					// findBlock(original);
+				if (curr_block.action != null) {
+					findBlock(original, curr_block, (Stack<String>) tree.clone());
 				}
 				// only props in here
 				else
 					processOverrideBlocks((Block) child, tree);
 			} else {
-				Property p = (Property) child;
-				if (p.action.equals("add")) {
-					curr_action = "add";
-					findBlock(original, p, (Stack<String>) tree.clone());
-				} else if (p.action.equals("remove")) {
-					curr_action = "remove";
-					findBlock(original, p, (Stack<String>) tree.clone());
-				}
+				findBlock(original, child, (Stack<String>) tree.clone());
 			}
 		}
-		tree.remove(tree.size()-1);
+		tree.remove(tree.size() - 1);
 	}
 
-	public boolean findBlock(Block b, Property p, Stack<String> tree) {
+	public boolean findBlock(Block b, LessObject changes, Stack<String> tree) {
+		logger.entry();
 		tree.remove("override");
 		for (int i = 0; i < b.children.size(); i++) {
 			if (b.children.get(i) instanceof Block) {
@@ -64,38 +58,89 @@ public class LessMerger {
 
 						// Recursively go through all sub-blocks
 						if (tree.size() > 0)
-							findBlock(curr_block, p, tree);
+							findBlock(curr_block, changes, tree);
 						else if (tree.size() == 0) {
-							if (p.action.equals("add")) {
-								curr_block.children.add(p);
-								System.out.println("added: " + p.name + ": "
-										+ p.value);
-								return true;
-							} else if (p.action.equals("remove")) {
-								for (int j = 0; j < curr_block.children.size(); j++) {
-									if (curr_block.children.get(j) instanceof Property) {
-										Property curr_prop = (Property) curr_block.children
-												.get(j);
-										if (curr_prop.name.equals(p.name)
-												&& curr_prop.value
-														.equals(p.value)) {
-											curr_block.children.remove(j);
-											System.out.println("removed: "
-													+ p.name + ": " + p.value);
-											return true;
+							// Process blocks
+							if (changes instanceof Block) {
+								Block change_bock = (Block) changes;
+								// add the block
+								if (change_bock.action.equals("add")) {
+									curr_block.children.add(change_bock);
+									logger.info("added: " + change_bock.selector);
+									return logger.exit(true);
+								}
+								// removes
+								else if (change_bock.action.equals("remove")) {
+									// loop to find the correct prop
+									for (int j = 0; j < curr_block.children.size(); j++) {
+										if (curr_block.children.get(j) instanceof Block) {
+											Block loop_block = (Block) curr_block.children.get(j);
+											if (loop_block.selector.equals(curr_block.selector) && loop_block.selector.equals(curr_block.selector)) {
+												curr_block.children.remove(j);
+												logger.info("removed: " + curr_block.selector);
+												return logger.exit(true);
+											}
 										}
 									}
+									logger.warn("did not find: " + curr_block.selector);
+									return logger.exit(false);
 								}
-								System.out.println("did not find: " + p.name
-										+ ": " + p.value);
-								return false;
 							}
 
+							// Process props
+							if (changes instanceof Property) {
+								Property p = (Property) changes;
+								// adds
+								if (p.action.equals("add")) {
+									curr_block.children.add(p);
+									logger.info("added: " + p.name + ": " + p.value);
+									return logger.exit(true);
+								}
+								// removes
+								else if (p.action.equals("remove")) {
+									// loop to find the correct prop
+									for (int j = 0; j < curr_block.children.size(); j++) {
+										if (curr_block.children.get(j) instanceof Property) {
+											Property curr_prop = (Property) curr_block.children.get(j);
+											if (curr_prop.name.equals(p.name) && curr_prop.value.equals(p.value)) {
+												curr_block.children.remove(j);
+												logger.info("removed: " + p.name + ": " + p.value);
+												return logger.exit(true);
+											}
+										}
+									}
+									logger.warn("did not find: " + p.name + ": " + p.value);
+									return logger.exit(false);
+								}
+							}
 						}
+					}
+				} else if (tree.size() == 0 && changes instanceof Block) {
+					Block change_bock = (Block) changes;
+					if (change_bock.action.equals("add")) {
+						b.children.add(changes);
+						logger.info("added: " + change_bock.selector);
+						return logger.exit(true);
+					}
+					// removes
+					else if (change_bock.action.equals("remove")) {
+						// loop to find the correct prop
+						for (int j = 0; j < b.children.size(); j++) {
+							if (b.children.get(j) instanceof Block) {
+								Block loop_block = (Block) b.children.get(j);
+								if (loop_block.selector.equals(change_bock.selector) && loop_block.selector.equals(change_bock.selector)) {
+									b.children.remove(j);
+									logger.info("removed: " + b.selector);
+									return logger.exit(true);
+								}
+							}
+						}
+						logger.warn("did not find: " + curr_block.selector);
+						return logger.exit(false);
 					}
 				}
 			}
 		}
-		return false;
+		return logger.exit(false);
 	}
 }
