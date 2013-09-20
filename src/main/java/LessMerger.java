@@ -17,12 +17,14 @@ public class LessMerger {
 	}
 
 	public void merge() {
-		processOverrideBlocks(override);
+		Stack<String> tree = new Stack<String>();
+		//tree.add("override");
+		processOverrideBlocks(override, tree);
 	}
 
-	public void processOverrideBlocks(Block b) {
+	public void processOverrideBlocks(Block b, Stack<String> tree) {
+		tree.add(b.selector);
 		for (LessObject child : b.children) {
-			tree.add(b.selector);
 			if (child instanceof Block) {
 				Block curr_block = (Block) child;
 				if (curr_block.action.equals("remove")) {
@@ -34,21 +36,22 @@ public class LessMerger {
 				}
 				// only props in here
 				else
-					processOverrideBlocks((Block) child);
+					processOverrideBlocks((Block) child, tree);
 			} else {
 				Property p = (Property) child;
 				if (p.action.equals("add")) {
 					curr_action = "add";
-					findBlock(original, p);
+					findBlock(original, p, (Stack<String>) tree.clone());
 				} else if (p.action.equals("remove")) {
 					curr_action = "remove";
-					findBlock(original, p);
+					findBlock(original, p, (Stack<String>) tree.clone());
 				}
 			}
 		}
+		tree.remove(tree.size()-1);
 	}
 
-	public boolean findBlock(Block b, Property p) {
+	public boolean findBlock(Block b, Property p, Stack<String> tree) {
 		tree.remove("override");
 		for (int i = 0; i < b.children.size(); i++) {
 			if (b.children.get(i) instanceof Block) {
@@ -61,7 +64,7 @@ public class LessMerger {
 
 						// Recursively go through all sub-blocks
 						if (tree.size() > 0)
-							findBlock(curr_block, p);
+							findBlock(curr_block, p, tree);
 						else if (tree.size() == 0) {
 							if (p.action.equals("add")) {
 								curr_block.children.add(p);
