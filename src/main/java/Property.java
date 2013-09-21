@@ -1,7 +1,12 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Property extends LessObject {
 	String name;
 	String value;
 	boolean mixin = false;
+	private Logger logger = LogManager.getLogger(LessMerger.class.getName());
+
 
 	public Property(String prop) {
 		prop = prop.trim();

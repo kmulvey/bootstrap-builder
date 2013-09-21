@@ -6,7 +6,6 @@ public class LessObject {
 	String action;
 	private Logger logger = LogManager.getLogger(LessMerger.class.getName());
 
-	
 	public String getAction(){
 		return logger.exit(action);
 	}
