@@ -32,7 +32,6 @@ public class LessParser {
 					depth_stack.push(curr_block);
 				}
 				curr_block = new Block(buffer);
-				curr_block.action = detectOverride(buffer);
 				buffer = "";
 				curly_count++;
 			} else if (c == '}') {
@@ -72,16 +71,6 @@ public class LessParser {
 				buffer += c;
 			}
 		}
-	}
-
-	public String detectOverride(String less) {
-		logger.entry();
-		less = less.trim();
-		if (less.startsWith("-"))
-			return "remove";
-		else if (less.startsWith("+"))
-			return logger.exit("add");
-		return logger.exit("");
 	}
 
 	public String toString() {

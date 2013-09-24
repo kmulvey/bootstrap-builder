@@ -29,8 +29,11 @@ public class LessMerger {
 			// this if else is used to determine if we need to recurse
 			if (child instanceof Block) {
 				Block curr_block = (Block) child;
-				if (!curr_block.action.equals("")) {
+				if (curr_block.action != null) {
 					applyUpdates(original, curr_block, (Stack<String>) tree.clone());
+					if(curr_block.action.equals("update")){
+						processOverrideBlocks((Block) child, tree);
+					}
 				}else{
 					processOverrideBlocks((Block) child, tree);
 				}				
@@ -85,6 +88,20 @@ public class LessMerger {
 									}
 									logger.warn("did not find: " + curr_block.selector);
 									return logger.exit(false);
+								}
+								else if (change_bock.action.equals("update")) {
+									// loop to find the correct prop
+									for (int j = 0; j < curr_block.children.size(); j++) {
+										if (curr_block.children.get(j) instanceof Block) {
+											Block loop_block = (Block) curr_block.children.get(j);
+											if (loop_block.selector.equals(curr_block.selector) && loop_block.selector.equals(curr_block.selector)) {
+												change_bock.selector = change_bock.updated_selector[1];
+												loop_block.selector = change_bock.selector;
+												logger.info("updated: " + change_bock.selector);
+												return logger.exit(true);
+											}
+										}
+									}
 								}
 							}
 
@@ -141,6 +158,19 @@ public class LessMerger {
 						}
 						logger.warn("did not find: " + change_bock.selector);
 						return logger.exit(false);
+					}
+					else if (change_bock.action.equals("update")) {
+						for (int j = 0; j < b.children.size(); j++) {
+							if (b.children.get(j) instanceof Block) {
+								Block loop_block = (Block) b.children.get(j);
+								if (loop_block.selector.equals(change_bock.selector)) {
+									change_bock.selector = change_bock.updated_selector[1];
+									loop_block.selector = change_bock.selector;
+									logger.info("updated: " + change_bock.selector);
+									return logger.exit(true);
+								}
+							}
+						}
 					}
 				}
 			}
