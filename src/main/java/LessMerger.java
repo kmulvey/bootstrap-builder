@@ -55,8 +55,11 @@ public class LessMerger {
 						tree.remove(tree.firstElement());
 
 						// Recursively go through all sub-blocks
-						if (tree.size() > 0)
+						if (tree.size() > 0){
 							applyUpdates(curr_block, changes, tree);
+							// lets get out of here after adding the child
+							return logger.exit(true);
+						}
 						else if (tree.size() == 0) {
 							// Process blocks
 							if (changes instanceof Block) {
