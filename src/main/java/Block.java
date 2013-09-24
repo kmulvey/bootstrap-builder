@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class Block extends LessObject{
 	String selector;
 	ArrayList<LessObject> children;
-	private Logger logger = LogManager.getLogger(LessMerger.class.getName());
+	private Logger logger = LogManager.getLogger(Block.class.getName());
 
 	public Block(String sel){
 		logger.entry();

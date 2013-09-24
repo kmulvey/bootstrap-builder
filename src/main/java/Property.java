@@ -5,7 +5,7 @@ public class Property extends LessObject {
 	String name;
 	String value;
 	boolean mixin = false;
-	private Logger logger = LogManager.getLogger(LessMerger.class.getName());
+	private Logger logger = LogManager.getLogger(Property.class.getName());
 
 	public Property(String prop) {
 		logger.entry();

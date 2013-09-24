@@ -1,9 +1,14 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class LessParser {
 	String file;
 	ArrayList<LessObject> lessFile;
+	private Logger logger = LogManager.getLogger(LessParser.class.getName());
+
 
 	public LessParser(String f) {
 		file = f;
@@ -11,6 +16,7 @@ public class LessParser {
 	}
 
 	public void parseLess() {
+		logger.entry();
 		String buffer = "";
 		Stack<Block> depth_stack = new Stack<Block>();
 		Block curr_block = null, temp_block = null;
@@ -41,9 +47,9 @@ public class LessParser {
 					curr_block = depth_stack.pop();
 					curr_block.children.add(temp_block);
 				} else {
-					System.out.println("something went wrong closing a block");
-					System.out.println("stack size: " + depth_stack.size());
-					System.out.println("curly count: " + curly_count);
+					logger.warn("something went wrong closing a block");
+					logger.warn("stack size: " + depth_stack.size());
+					logger.warn("curly count: " + curly_count);
 				}
 			}
 			// set the property
@@ -69,25 +75,28 @@ public class LessParser {
 	}
 
 	public String detectOverride(String less) {
+		logger.entry();
 		less = less.trim();
 		if (less.startsWith("-"))
 			return "remove";
 		else if (less.startsWith("+"))
-			return "add";
-		return "";
+			return logger.exit("add");
+		return logger.exit("");
 	}
 
 	public String toString() {
+		logger.entry();
 		StringBuilder file = new StringBuilder();
 
 		for (int i = 0; i < lessFile.size(); i++) {
 			file.append(printBlock((Block) lessFile.get(i)));
 		}
 
-		return file.toString();
+		return logger.exit(file.toString());
 	}
 
 	public String printBlock(Block b) {
+		logger.entry();
 		StringBuilder block_str = new StringBuilder();
 		block_str.append(b.selector + "{");
 		for (int i = 0; i < b.children.size(); i++) {
@@ -100,6 +109,6 @@ public class LessParser {
 			}
 		}
 		block_str.append("}");
-		return block_str.toString();
+		return logger.exit(block_str.toString());
 	}
 }
