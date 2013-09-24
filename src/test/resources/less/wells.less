@@ -11,6 +11,10 @@
   blockquote {
 -    border-color: #ddd;
 +    border-color: rgba(255, 255, 255);
++	&:focus {
+  		margin: 10px;
+  		.border-radius(6px);
+	}
   }
 }
 
@@ -35,5 +39,5 @@
 @media (min-width: @screen-sm) {
 -	padding: 9px;
 +	margin: 10px;
-+	.box-sizing(border-box)
++	.box-sizing(border-box);
 }
