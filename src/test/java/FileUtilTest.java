@@ -21,12 +21,14 @@ public class FileUtilTest {
 
 	@Test
 	public void readFileTest() {
-		String expected = "this is a test file and its not empty.";
+		String expected = "this is a test file and its not empty.   ";
 		FileUtil f = new FileUtil();
 		URL file_path = FileUtilTest.class.getResource("/testfile.txt");
 		File test_file = new File(file_path.getPath());
 		String file_contents = f.readFile(test_file);
 		Assert.assertEquals(expected, file_contents);
+		Assert.assertEquals(false, file_contents.contains("block"));
+		Assert.assertEquals(false, file_contents.contains("single"));
 	}
 	@Test
 	public void merge() {

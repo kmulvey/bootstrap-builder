@@ -31,7 +31,7 @@ public class FileUtil {
 
 		try {
 			result = new Scanner(f).useDelimiter("\\Z").next();
-			result = result.replaceAll("//.*", "").replaceAll("\n", "");
+			result = result.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "").replaceAll("\n", "");
 		} catch (FileNotFoundException e) {
 			logger.catching(e);
 		}
