@@ -1,1 +1,10 @@
 this is a test file and its not empty.
+
+/*!
+ * block comment
+ *
+ * 
+ */
+ 
+ 
+ // single line comment
