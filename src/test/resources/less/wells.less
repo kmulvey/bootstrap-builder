@@ -23,3 +23,17 @@
 
 -.well-sm {
 }
+
++.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: -20px;
+}
+
+@media (min-width: @screen-sm) {
+-	padding: 9px;
++	margin: 10px;
++	.box-sizing(border-box)
+}
