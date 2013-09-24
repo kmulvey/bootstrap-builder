@@ -30,12 +30,12 @@ public class Property extends LessObject {
 		}
 	}
 	public String getName(){
-		return name;
+		return logger.exit(name);
 	}
 	public String getValue(){
-		return value;
+		return logger.exit(value);
 	}
 	public Boolean isMixin(){
-		return mixin;
+		return logger.exit(mixin);
 	}
 }
