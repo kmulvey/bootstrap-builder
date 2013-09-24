@@ -43,5 +43,16 @@ public class BlockTest {
 		Assert.assertEquals(null, b.getAction());
 		Assert.assertEquals("@media (min-width: @screen-sm)", b.getSelector());
 	}
-	
+	@Test
+	public void mediaQueryAddBlockTest() {
+		Block b = new Block("+  @media (min-width: @screen-sm)");
+		Assert.assertEquals("add", b.getAction());
+		Assert.assertEquals("@media (min-width: @screen-sm)", b.getSelector());
+	}
+	@Test
+	public void mediaQueryRemoveBlockTest() {
+		Block b = new Block("-     @media (min-width: @screen-sm)");
+		Assert.assertEquals("remove", b.getAction());
+		Assert.assertEquals("@media (min-width: @screen-sm)", b.getSelector());
+	}
 }
