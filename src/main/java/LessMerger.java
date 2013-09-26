@@ -31,12 +31,12 @@ public class LessMerger {
 				Block curr_block = (Block) child;
 				if (curr_block.action != null) {
 					applyUpdates(original, curr_block, (Stack<String>) tree.clone());
-					if(curr_block.action.equals("update")){
+					if (curr_block.action.equals("update")) {
 						processOverrideBlocks((Block) child, tree);
 					}
-				}else{
+				} else {
 					processOverrideBlocks((Block) child, tree);
-				}				
+				}
 			} else {
 				// this is a property, i wish we didnt need this if block
 				applyUpdates(original, child, (Stack<String>) tree.clone());
@@ -58,51 +58,16 @@ public class LessMerger {
 						tree.remove(tree.firstElement());
 
 						// Recursively go through all sub-blocks
-						if (tree.size() > 0){
+						if (tree.size() > 0) {
 							applyUpdates(curr_block, changes, tree);
 							// lets get out of here after adding the child
 							return logger.exit(true);
-						}
-						else if (tree.size() == 0) {
+						} else if (tree.size() == 0) {
 							// Process blocks
 							if (changes instanceof Block) {
 								Block change_bock = (Block) changes;
-								// add the block
-								if (change_bock.action.equals("add")) {
-									curr_block.children.add(change_bock);
-									logger.info("added: " + change_bock.selector);
-									return logger.exit(true);
-								}
-								// removes
-								else if (change_bock.action.equals("remove")) {
-									// loop to find the correct prop
-									for (int j = 0; j < curr_block.children.size(); j++) {
-										if (curr_block.children.get(j) instanceof Block) {
-											Block loop_block = (Block) curr_block.children.get(j);
-											if (loop_block.selector.equals(curr_block.selector) && loop_block.selector.equals(curr_block.selector)) {
-												curr_block.children.remove(j);
-												logger.info("removed: " + curr_block.selector);
-												return logger.exit(true);
-											}
-										}
-									}
-									logger.warn("did not find: " + curr_block.selector);
-									return logger.exit(false);
-								}
-								else if (change_bock.action.equals("update")) {
-									// loop to find the correct prop
-									for (int j = 0; j < curr_block.children.size(); j++) {
-										if (curr_block.children.get(j) instanceof Block) {
-											Block loop_block = (Block) curr_block.children.get(j);
-											if (loop_block.selector.equals(curr_block.selector) && loop_block.selector.equals(curr_block.selector)) {
-												change_bock.selector = change_bock.updated_selector[1];
-												loop_block.selector = change_bock.selector;
-												logger.info("updated: " + change_bock.selector);
-												return logger.exit(true);
-											}
-										}
-									}
-								}
+								findBlock(curr_block, change_bock);
+								return logger.exit(true);
 							}
 
 							// Process props
@@ -133,48 +98,45 @@ public class LessMerger {
 							}
 						}
 					}
-				} 
+				}
 				// this seems obtuse, basically this is for adding/removing blocks at the top level of the tree
 				else if (tree.size() == 0 && changes instanceof Block) {
 					Block change_bock = (Block) changes;
-					// add block to root level
-					if (change_bock.action.equals("add")) {
-						b.children.add(changes);
-						logger.info("added: " + change_bock.selector);
-						return logger.exit(true);
-					}
-					// remove block from root level
-					else if (change_bock.action.equals("remove")) {
-						// loop to find the correct block to remove
-						for (int j = 0; j < b.children.size(); j++) {
-							if (b.children.get(j) instanceof Block) {
-								Block loop_block = (Block) b.children.get(j);
-								if (loop_block.selector.equals(change_bock.selector)) {
-									b.children.remove(j);
-									logger.info("removed: " + change_bock.selector);
-									return logger.exit(true);
-								}
-							}
-						}
-						logger.warn("did not find: " + change_bock.selector);
-						return logger.exit(false);
-					}
-					else if (change_bock.action.equals("update")) {
-						for (int j = 0; j < b.children.size(); j++) {
-							if (b.children.get(j) instanceof Block) {
-								Block loop_block = (Block) b.children.get(j);
-								if (loop_block.selector.equals(change_bock.selector)) {
-									change_bock.selector = change_bock.updated_selector[1];
-									loop_block.selector = change_bock.selector;
-									logger.info("updated: " + change_bock.selector);
-									return logger.exit(true);
-								}
-							}
+					findBlock(b, change_bock);
+					return logger.exit(true);
+				}
+			}
+		}
+		return logger.exit(false);
+	}
+
+	public boolean findBlock(Block source, Block changes) {
+		// add block to root level
+		if (changes.action.equals("add")) {
+			source.children.add(changes);
+			logger.info("added: " + changes.selector);
+			return logger.exit(true);
+		} else {
+			// loop to find the correct block to remove
+			for (int j = 0; j < source.children.size(); j++) {
+				if (source.children.get(j) instanceof Block) {
+					Block loop_block = (Block) source.children.get(j);
+					if (loop_block.selector.equals(changes.selector)) {
+						if (changes.action.equals("remove")) {
+							source.children.remove(j);
+							logger.info("removed: " + changes.selector);
+							return logger.exit(true);
+						} else if (changes.action.equals("update")) {
+							changes.selector = changes.updated_selector[1];
+							loop_block.selector = changes.selector;
+							logger.info("updated: " + changes.selector);
+							return logger.exit(true);
 						}
 					}
 				}
 			}
 		}
+		logger.warn("did not find: " + changes.selector);
 		return logger.exit(false);
 	}
 }
