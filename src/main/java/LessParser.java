@@ -54,7 +54,11 @@ public class LessParser {
 			// set the property
 			else if (c == ';' && paren_count == 0) {
 				Property prop = new Property(buffer);
-				curr_block.children.add(prop);
+				if(curly_count == 0 && prop.mixin){
+					lessFile.add(prop);
+				}else{
+					curr_block.children.add(prop);
+				}
 				buffer = "";
 			}
 			// ignore ; inside () --- mixins
@@ -78,7 +82,14 @@ public class LessParser {
 		StringBuilder file = new StringBuilder();
 
 		for (int i = 0; i < lessFile.size(); i++) {
-			file.append(printBlock((Block) lessFile.get(i)));
+			if(lessFile.get(i) instanceof Block){
+				file.append(printBlock((Block) lessFile.get(i)));
+			}
+			// this is a mixin at the root level
+			else{
+				Property p = (Property) lessFile.get(i);
+				file.append(p.name + ";");
+			}
 		}
 
 		return logger.exit(file.toString());
