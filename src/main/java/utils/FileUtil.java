@@ -15,12 +15,12 @@ public class FileUtil {
 
 	}
 
-	public ArrayList<String> findFiles(String path) {
+	public ArrayList<File> findFiles(String path) {
 		logger.entry();
-		ArrayList<String> files= new ArrayList<String>();
+		ArrayList<File> files= new ArrayList<File>();
 		File dir = new File(path);
 		 for (File child : dir.listFiles()) {
-			 files.add(child.getAbsolutePath());
+			 files.add(child);
 		 }
 		return logger.exit(files);
 	}
