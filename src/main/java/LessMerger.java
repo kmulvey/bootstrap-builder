@@ -55,6 +55,7 @@ public class LessMerger {
 				if (tree.size() > 0) {
 					// find the right block
 					if (curr_block.selector.equals(tree.firstElement())) {
+						// this is premature because there may be more than one block with the same selector
 						tree.remove(tree.firstElement());
 
 						// Recursively go through all sub-blocks
@@ -68,6 +69,7 @@ public class LessMerger {
 								Block change_bock = (Block) changes;
 								findBlock(curr_block, change_bock);
 								return logger.exit(true);
+
 							}
 
 							// Process props
@@ -107,6 +109,7 @@ public class LessMerger {
 				}
 			}
 		}
+		logger.warn("did not find: " + tree.firstElement());
 		return logger.exit(false);
 	}
 
