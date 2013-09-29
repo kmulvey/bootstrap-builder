@@ -18,15 +18,17 @@ public class Property extends LessObject {
 			prop = prop.substring(1).trim();
 		}
 		
-		// this looks like a mixin
-		if (prop.trim().startsWith(".") && prop.contains("(")) {
-			name = prop.trim();
-			value = "";
-			mixin = true;
-		} else{
+		
+		if (prop.trim().contains(":")) {
 			String[] property = prop.split(":");
 			name = property[0].trim();
 			value = property[1].trim();
+		} 
+		// this looks like a mixin
+		else{
+			name = prop.trim();
+			value = "";
+			mixin = true;
 		}
 	}
 	public String getName(){
