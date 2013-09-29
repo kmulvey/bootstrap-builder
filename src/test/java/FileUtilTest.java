@@ -48,19 +48,19 @@ public class FileUtilTest {
 	 System.out.println(orig.toString());
 	 Assert.assertEquals(expected,orig.toString());
 	 }
-	@Test
-	public void mergetwo() {
-		FileUtil f = new FileUtil();
-		LessParser orig = new LessParser(f.readFile(new File("/var/www/bootstrap-twbs/less/tooltip.less")));
-		LessParser over = new LessParser(f.readFile(new File("/var/www/bootstrap-kmulvey/less/shutterstock/tooltip.less")));
-
-		over.parseLess();
-		orig.parseLess();
-
-		LessMerger lm = new LessMerger(orig, over);
-		lm.merge();
-		System.out.println(orig.toString());
-	}
+//	@Test
+//	public void mergetwo() {
+//		FileUtil f = new FileUtil();
+//		LessParser orig = new LessParser(f.readFile(new File("/var/www/bootstrap-twbs/less/tooltip.less")));
+//		LessParser over = new LessParser(f.readFile(new File("/var/www/bootstrap-kmulvey/less/shutterstock/tooltip.less")));
+//
+//		over.parseLess();
+//		orig.parseLess();
+//
+//		LessMerger lm = new LessMerger(orig, over);
+//		lm.merge();
+//		System.out.println(orig.toString());
+//	}
 
 //	@Test
 //	public void mergeAll() {
