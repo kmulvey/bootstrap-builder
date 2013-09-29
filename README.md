@@ -72,6 +72,8 @@ The format of this file looks similar to a diff file and tweaking an actual diff
 }
 ```
 
+note: do not put comments at the end of a line, put them on their own line
+
 
 ## Running tests
 
