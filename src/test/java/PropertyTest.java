@@ -66,6 +66,15 @@ public class PropertyTest {
 		Assert.assertEquals(true, p.isMixin());
 	}
 	@Test
+	public void multiMixinPrefixTest() {
+		Property p = new Property("	#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%));");
+		Assert.assertEquals(null, p.getAction());
+		Assert.assertEquals("#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))", p.getName());
+		Assert.assertEquals("", p.getValue());
+		Assert.assertEquals(true, p.isMixin());
+	}
+	
+	@Test
 	public void addMixinPrefixTest() {
 		Property p = new Property("+  .box-sizing(border-box)");
 		Assert.assertEquals("add", p.getAction());
