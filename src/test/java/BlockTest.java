@@ -35,7 +35,7 @@ public class BlockTest {
 	public void quotedBlockTest() {
 		Block b = new Block("input[type=\"radio\"],  input[type=\"checkbox\"]");
 		Assert.assertEquals(null, b.getAction());
-		Assert.assertEquals("input[type=\"radio\"],  input[type=\"checkbox\"]", b.getSelector());
+		Assert.assertEquals("input[type=\"radio\"],input[type=\"checkbox\"]", b.getSelector());
 	}
 	@Test
 	public void mediaQueryBlockTest() {
