@@ -15,20 +15,18 @@ public class Block extends LessObject {
 
 		if (sel.startsWith("-")) {
 			action = "remove";
-			selector = sel.substring(1).trim();
+			selector = sel.substring(1).trim().replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " set to be removed.");
 		} else if (sel.startsWith("+")) {
 			action = "add";
-			selector = sel.substring(1).trim();
+			selector = sel.substring(1).trim().replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " set to be added.");
 		} else if (sel.contains("%")) {
-			// if there is a +/- and its not the first char then we must be
-			// updating the selector
 			action = "update";
-			updated_selector = sel.split("%");
+			updated_selector = sel.trim().replaceAll(",\\s*", ",").split("%");
 			selector = updated_selector[0];
 		} else {
-			selector = sel;
+			selector = sel.replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " read.");
 		}
 
