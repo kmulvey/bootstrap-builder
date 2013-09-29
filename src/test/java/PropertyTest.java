@@ -67,7 +67,7 @@ public class PropertyTest {
 	}
 	@Test
 	public void multiMixinPrefixTest() {
-		Property p = new Property("	#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%));");
+		Property p = new Property("	#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))");
 		Assert.assertEquals(null, p.getAction());
 		Assert.assertEquals("#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))", p.getName());
 		Assert.assertEquals("", p.getValue());
