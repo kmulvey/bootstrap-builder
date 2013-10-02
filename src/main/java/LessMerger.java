@@ -56,18 +56,28 @@ public class LessMerger {
 					// find the right block
 					if (curr_block.selector.equals(tree.firstElement())) {
 						// this is premature because there may be more than one block with the same selector
-						tree.remove(tree.firstElement());
+						//tree.remove(tree.firstElement());
 
 						// Recursively go through all sub-blocks
-						if (tree.size() > 0) {
-							applyUpdates(curr_block, changes, tree);
+						if (tree.size() > 1) {
+							Stack<String> sub_tree = (Stack<String>) tree.clone();
+							sub_tree.remove(sub_tree.firstElement());
 							// lets get out of here after adding the child
-							return logger.exit(true);
-						} else if (tree.size() == 0) {
+							if(applyUpdates(curr_block, changes, sub_tree)){
+								return logger.exit(true);
+							}else{
+								logger.info("recurse failed.");
+							}
+							
+						} else if (tree.size() == 1) {
 							// Process blocks
 							if (changes instanceof Block) {
 								Block change_bock = (Block) changes;
-								findBlock(curr_block, change_bock);
+								if(findBlock(curr_block, change_bock)){
+									logger.info("recurse returned true");
+								}else{
+									logger.info("recurse returned false");
+								}
 								return logger.exit(true);
 
 							}
@@ -138,8 +148,8 @@ public class LessMerger {
 					}
 				}
 			}
+			logger.warn("did not find: " + changes.selector);
+			return logger.exit(false);
 		}
-		logger.warn("did not find: " + changes.selector);
-		return logger.exit(false);
 	}
 }
