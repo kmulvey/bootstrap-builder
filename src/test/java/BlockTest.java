@@ -55,4 +55,10 @@ public class BlockTest {
 		Assert.assertEquals("remove", b.getAction());
 		Assert.assertEquals("@media (min-width: @screen-sm)", b.getSelector());
 	}
+	@Test
+	public void removeCompoundBlockTest() {
+		Block b = new Block("-     (~\"input.span@{index}, textarea.span@{index}, .uneditable-input.span@{index}\")");
+		Assert.assertEquals("remove", b.getAction());
+		Assert.assertEquals("(~\"input.span@{index},textarea.span@{index},.uneditable-input.span@{index}\")", b.getSelector());
+	}
 }
