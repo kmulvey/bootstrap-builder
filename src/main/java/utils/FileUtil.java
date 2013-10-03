@@ -1,7 +1,10 @@
 package utils;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -36,5 +39,22 @@ public class FileUtil {
 			logger.catching(e);
 		}
 		return logger.exit(result);
+	}
+	// the caller of this program will clean this dir for us
+	public String createWorkDri(String src_dir){
+		new File(src_dir + "/work/").mkdir();
+		return src_dir + "/work/";
+	}
+	public void writeMergedFile(String dir, String name, String contents){
+		File file = new File(dir + "/" + name);
+		FileWriter fw;
+		try {
+			fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(contents);
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
