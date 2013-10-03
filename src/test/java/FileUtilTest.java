@@ -48,18 +48,20 @@ public class FileUtilTest {
 	 System.out.println(orig.toString());
 	 Assert.assertEquals(expected,orig.toString());
 	 }
+	 
 	@Test
 	public void mergetwo() {
 		FileUtil f = new FileUtil();
-		LessParser orig = new LessParser(f.readFile(new File("/var/www/bootstrap-twbs/less/tooltip.less")));
-		LessParser over = new LessParser(f.readFile(new File("/var/www/bootstrap-kmulvey/less/shutterstock/tooltip.less")));
+		LessParser orig = new LessParser(f.readFile(new File("/var/www/bootstrap-twbs/less/mixins.less")));
+		LessParser over = new LessParser(f.readFile(new File("/var/www/bootstrap-kmulvey/less/shutterstock/mixins.less")));
 
 		over.parseLess();
 		orig.parseLess();
 
 		LessMerger lm = new LessMerger(orig, over);
 		lm.merge();
-		System.out.println(orig.toString());
+		String work_dir = f.createWorkDri("/var/www/bootstrap-kmulvey/less/shutterstock/");
+		f.writeMergedFile(work_dir, "mixins.less", orig.toString());
 	}
 
 //	@Test
@@ -77,7 +79,8 @@ public class FileUtilTest {
 //
 //				LessMerger lm = new LessMerger(orig, over);
 //				lm.merge();
-//				System.out.println(orig.toString());
+//				String work_dir = f.createWorkDri("/var/www/bootstrap-kmulvey/less/shutterstock/");
+//				f.writeMergedFile(work_dir, etc_files.get(i).getName(), orig.toString());
 //			}
 //		}
 //		Assert.assertEquals(false, etc_files.isEmpty());
