@@ -25,8 +25,8 @@ public class LessParser {
 		for (int i = 0; i < file.length(); i++) {
 			char c = file.charAt(i);
 
-			// set the selector
-			if (c == '{') {
+			// set the selector; check paren_count to handle less loops
+			if (c == '{' && paren_count == 0) {
 				// up periscope DIVE DIVE DIVE
 				if (curr_block != null) {
 					depth_stack.push(curr_block);
@@ -34,7 +34,9 @@ public class LessParser {
 				curr_block = new Block(buffer);
 				buffer = "";
 				curly_count++;
-			} else if (c == '}') {
+			} 
+			// check paren_count to handle less loops
+			else if (c == '}' && paren_count == 0) {
 				curly_count--;
 
 				// down periscope CLIMB CLIMB CLIMB
