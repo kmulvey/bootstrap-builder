@@ -30,7 +30,9 @@ public class LessMerger {
 			if (child instanceof Block) {
 				Block curr_block = (Block) child;
 				if (curr_block.action != null) {
-					applyUpdates(original, curr_block, (Stack<String>) tree.clone());
+					if(!applyUpdates(original, curr_block, (Stack<String>) tree.clone())){
+						logger.warn("did not find: " + tree.firstElement());
+					}
 					if (curr_block.action.equals("update")) {
 						processOverrideBlocks((Block) child, tree);
 					}
@@ -39,7 +41,9 @@ public class LessMerger {
 				}
 			} else {
 				// this is a property, i wish we didnt need this if block
-				applyUpdates(original, child, (Stack<String>) tree.clone());
+				if(!applyUpdates(original, child, (Stack<String>) tree.clone())){
+					logger.warn("did not find: " + tree.toString());
+				}
 			}
 		}
 		tree.remove(tree.size() - 1);
@@ -65,8 +69,6 @@ public class LessMerger {
 							// lets get out of here after adding the child
 							if(applyUpdates(curr_block, changes, sub_tree)){
 								return logger.exit(true);
-							}else{
-								logger.info("recurse failed.");
 							}
 							
 						} else if (tree.size() == 1) {
@@ -119,7 +121,6 @@ public class LessMerger {
 				}
 			}
 		}
-		logger.warn("did not find: " + tree.firstElement());
 		return logger.exit(false);
 	}
 
