@@ -90,5 +90,12 @@ public class PropertyTest {
 		Assert.assertEquals("", p.getValue());
 		Assert.assertEquals(true, p.isMixin());
 	}
-
+	@Test
+	public void IEHackTest() {
+		Property p = new Property("filter: e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))");
+		Assert.assertEquals(null, p.getAction());
+		Assert.assertEquals("filter", p.getName());
+		Assert.assertEquals(" e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))", p.getValue());
+		Assert.assertEquals(false, p.isMixin());
+	}
 }
