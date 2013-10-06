@@ -29,7 +29,13 @@ public class BlockTest {
 		Block b = new Block("  +  .form-emphasis");
 		Assert.assertEquals("add", b.getAction());
 		Assert.assertEquals(".form-emphasis", b.getSelector());
-
+	}
+	@Test
+	public void replaceBlockTest() {
+		Block b = new Block(".form-emphasis%.form-basic");
+		Assert.assertEquals("update", b.getAction());
+		Assert.assertEquals(".form-emphasis", b.getSelector());
+		Assert.assertEquals(2, b.updated_selector.length);
 	}
 	@Test
 	public void quotedBlockTest() {
@@ -61,4 +67,12 @@ public class BlockTest {
 		Assert.assertEquals("remove", b.getAction());
 		Assert.assertEquals("(~\"input.span@{index},textarea.span@{index},.uneditable-input.span@{index}\")", b.getSelector());
 	}
+	@Test
+	public void percentValBlockTest() {
+		Block b = new Block(".vertical-three-colors(@startColor: #00b3ee, @midColor: #7a43b6, @colorStop: 50%, @endColor: #c3325f)");
+		Assert.assertEquals(null, b.getAction());
+		Assert.assertEquals(".vertical-three-colors(@startColor: #00b3ee,@midColor: #7a43b6,@colorStop: 50%,@endColor: #c3325f)", b.getSelector());
+	}
+	
+	// need update tests
 }

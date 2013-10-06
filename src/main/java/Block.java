@@ -22,9 +22,17 @@ public class Block extends LessObject {
 			selector = sel.substring(1).trim().replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " set to be added.");
 		} else if (sel.contains("%")) {
-			action = "update";
-			updated_selector = sel.trim().replaceAll(",\\s*", ",").split("%");
-			selector = updated_selector[0];
+			if(!sel.matches(".*\\(.*%.*\\)")){
+				action = "update";
+				updated_selector = sel.trim().replaceAll(",\\s*", ",").split("%");
+				selector = updated_selector[0];
+				logger.info("selector: " + selector + " to be updated.");
+			}
+			// this is not an update, it just has a % in it
+			else{
+			selector = sel.trim().replaceAll(",\\s*", ",");
+			logger.info("selector: " + selector + " read.");
+			}
 		} else {
 			selector = sel.replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " read.");
