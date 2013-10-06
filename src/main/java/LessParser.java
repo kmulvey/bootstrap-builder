@@ -21,12 +21,19 @@ public class LessParser {
 		Stack<Block> depth_stack = new Stack<Block>();
 		Block curr_block = null, temp_block = null;
 		int paren_count = 0, curly_count = 0;
+		char look_behind = 0;
+		boolean twig_var = false;
 
 		for (int i = 0; i < file.length(); i++) {
 			char c = file.charAt(i);
 
-			// set the selector; check paren_count to handle less loops
-			if (c == '{' && paren_count == 0) {
+			// detect twig loop variables
+			if(c == '{' && look_behind == '@'){
+				twig_var = true;
+			}
+			
+			// set the selector
+			if (c == '{' && twig_var == false) {
 				// up periscope DIVE DIVE DIVE
 				if (curr_block != null) {
 					depth_stack.push(curr_block);
@@ -34,9 +41,14 @@ public class LessParser {
 				curr_block = new Block(buffer);
 				buffer = "";
 				curly_count++;
-			} 
-			// check paren_count to handle less loops
-			else if (c == '}' && paren_count == 0) {
+			} else if (c == '}') {
+				if(twig_var == true){
+					twig_var = false;
+					// we are leaving the party early so we need to shake some babies and kiss some hands
+					buffer += c;
+					look_behind = c;
+					continue;
+				}
 				curly_count--;
 
 				// down periscope CLIMB CLIMB CLIMB
@@ -76,6 +88,8 @@ public class LessParser {
 			else {
 				buffer += c;
 			}
+			// set curr char to prev
+			look_behind = c;
 		}
 	}
 
