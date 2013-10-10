@@ -25,7 +25,7 @@ public class Block extends LessObject {
 			if(!sel.matches(".*\\(.*%.*\\)")){
 				action = "update";
 				updated_selector = sel.trim().replaceAll(",\\s*", ",").split("%");
-				selector = updated_selector[0];
+				selector = updated_selector[0].trim();
 				logger.info("selector: " + selector + " to be updated.");
 			}
 			// this is not an update, it just has a % in it
