@@ -106,8 +106,9 @@ public class LessMerger {
 											}
 										}
 									}
+									// this is premature because there may be another block with the same selector further down the loop
 									logger.warn("did not find: " + p.name + ": " + p.value);
-									return logger.exit(false);
+									//return logger.exit(false);
 								}
 							}
 						}
