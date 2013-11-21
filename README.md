@@ -72,7 +72,27 @@ The format of this file looks similar to a diff file and tweaking an actual diff
 }
 ```
 
-note: do not put comments at the end of a line, put them on their own line
+* **Change a selector**: The first selector is what you are looking for, the second is what you are replacing it with. You can still put properties in the block. Be sure to put the {} at the end of the new selector.
+```
+button
+%
+.btn {
++	padding: 24px;
+-	.border-radius(6px);
+}
+```
+```
+input[type="checkbox"],
+input[type="text"],
+input[type="button"] 
+%
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {}
+```
+
+
+note: do not put comments at the end of a line, put them on their own line.  White space at the end of lines also breaks.  These should both be fixed at somne point.  
 
 
 ## Running tests
