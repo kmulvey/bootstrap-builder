@@ -2,13 +2,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Property extends LessObject {
+	private String prop;
 	String name;
 	String value;
 	boolean mixin = false;
 	private Logger logger = LogManager.getLogger(Property.class.getName());
 
-	public Property(String prop) {
+	public Property(String property) {
 		logger.entry();
+		prop = property;
+		this.process();
+	}
+
+	public void process(){
 		if (prop.startsWith("-")) {
 			action = "remove";
 			prop = prop.substring(1).trim();
@@ -47,7 +53,6 @@ public class Property extends LessObject {
 			mixin = true;
 		}
 	}
-
 	public String getName() {
 		return logger.exit(name);
 	}

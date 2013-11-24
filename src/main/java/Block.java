@@ -10,31 +10,33 @@ public class Block extends LessObject {
 	private Logger logger = LogManager.getLogger(Block.class.getName());
 
 	public Block(String sel) {
-		logger.entry();
-		sel = sel.trim();
+		selector = sel.trim();
+		this.process();
+	}
 
-		if (sel.startsWith("-")) {
+	public void process() {
+		if (selector.startsWith("-")) {
 			action = "remove";
-			selector = sel.substring(1).trim().replaceAll(",\\s*", ",");
+			selector = selector.substring(1).trim().replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " set to be removed.");
-		} else if (sel.startsWith("+")) {
+		} else if (selector.startsWith("+")) {
 			action = "add";
-			selector = sel.substring(1).trim().replaceAll(",\\s*", ",");
+			selector = selector.substring(1).trim().replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " set to be added.");
-		} else if (sel.contains("%")) {
-			if(!sel.matches(".*\\(.*%.*\\)")){
+		} else if (selector.contains("%")) {
+			if (!selector.matches(".*\\(.*%.*\\)")) {
 				action = "update";
-				updated_selector = sel.trim().replaceAll(",\\s*", ",").split("%");
+				updated_selector = selector.trim().replaceAll(",\\s*", ",").split("%");
 				selector = updated_selector[0].trim();
 				logger.info("selector: " + selector + " to be updated.");
 			}
 			// this is not an update, it just has a % in it
-			else{
-			selector = sel.trim().replaceAll(",\\s*", ",");
-			logger.info("selector: " + selector + " read.");
+			else {
+				selector = selector.trim().replaceAll(",\\s*", ",");
+				logger.info("selector: " + selector + " read.");
 			}
 		} else {
-			selector = sel.replaceAll(",\\s*", ",");
+			selector = selector.replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " read.");
 		}
 
