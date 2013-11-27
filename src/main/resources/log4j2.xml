@@ -4,19 +4,22 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</Console>
+		<File name="bitbucket" fileName="/dev/null" immediateFlush="true">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+    	</File>
 	</Appenders>
 	<Loggers>
 		<Root level="error">
 			<AppenderRef ref="Console" />
 		</Root>
-		<Root level="warning">
+		<Root level="warn">
 			<AppenderRef ref="Console" />
 		</Root>
 		<Root level="info">
-			<AppenderRef ref="Console" />
+			<AppenderRef ref="bitbucket" />
 		</Root>
 		<Root level="debug">
-			<AppenderRef ref="Console" />
+			<AppenderRef ref="bitbucket" />
 		</Root>
 	</Loggers>
 </Configuration>
