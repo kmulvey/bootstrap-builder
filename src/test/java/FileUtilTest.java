@@ -7,6 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import com.ss.less.LessMerger;
+import com.ss.less.LessParser;
+
 import utils.FileUtil;
 
 @RunWith(JUnit4.class)
