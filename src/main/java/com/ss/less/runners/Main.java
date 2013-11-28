@@ -13,8 +13,6 @@ public class Main {
   	String override_dir = args[1];
   	String output_dir = args[2];
   	
-  	System.out.println(Main.class.getCanonicalName());
-  	
     // We will store the threads so that we can check if they are done
     List<Thread> threads = new ArrayList<Thread>();    
     
