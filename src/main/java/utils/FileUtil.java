@@ -34,16 +34,15 @@ public class FileUtil {
 
 		try {
 			result = new Scanner(f).useDelimiter("\\Z").next();
-			result = result.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)", "").replaceAll("\n", "");
+			result = result.replaceAll("(?s)/\\*.*?\\*/|(?-s)//(?![^()\r\n]*\\)).*", "").replaceAll("\n", "");
 		} catch (FileNotFoundException e) {
 			logger.catching(e);
 		}
 		return logger.exit(result);
 	}
 	// the caller of this program will clean this dir for us
-	public String createWorkDri(String src_dir){
-		new File(src_dir + "/work/").mkdir();
-		return src_dir + "/work/";
+	public void createWorkDir(String work_dir){
+		new File(work_dir).mkdir();
 	}
 	public void writeMergedFile(String dir, String name, String contents){
 		File file = new File(dir + "/" + name);
