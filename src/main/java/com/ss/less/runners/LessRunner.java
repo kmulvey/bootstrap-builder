@@ -3,8 +3,7 @@ package com.ss.less.runners;
 
 import com.ss.less.LessMerger;
 import com.ss.less.LessParser;
-
-import utils.FileUtil;
+import com.ss.less.utils.FileUtil;
 
 
 public class LessRunner implements Runnable {

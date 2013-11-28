@@ -1,4 +1,4 @@
-package utils;
+package com.ss.less.utils;
 
 import java.io.BufferedWriter;
 import java.io.File;

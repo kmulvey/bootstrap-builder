@@ -9,8 +9,7 @@ import org.junit.runners.JUnit4;
 
 import com.ss.less.LessMerger;
 import com.ss.less.LessParser;
-
-import utils.FileUtil;
+import com.ss.less.utils.FileUtil;
 
 @RunWith(JUnit4.class)
 public class FileUtilTest {
@@ -48,7 +47,6 @@ public class FileUtilTest {
 
 		LessMerger lm = new LessMerger(orig, over);
 		lm.merge();
-		System.out.println(orig.toString());
 		Assert.assertEquals(expected, orig.toString());
 	}
 }

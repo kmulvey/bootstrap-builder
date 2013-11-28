@@ -4,7 +4,8 @@ package com.ss.less.runners;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import utils.FileUtil;
+
+import com.ss.less.utils.FileUtil;
 
 public class Main {
 
