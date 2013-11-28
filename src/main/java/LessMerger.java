@@ -76,11 +76,12 @@ public class LessMerger {
 							if (changes instanceof Block) {
 								Block change_bock = (Block) changes;
 								if(findBlock(curr_block, change_bock)){
-									logger.info("recurse returned true");
+									logger.info(change_bock.action + ": " + change_bock.selector);
+									return logger.exit(true);
 								}else{
-									logger.info("recurse returned false");
+									logger.info("keep looking for " + change_bock.selector);
+									continue;
 								}
-								return logger.exit(true);
 
 							}
 
@@ -150,7 +151,6 @@ public class LessMerger {
 					}
 				}
 			}
-			logger.warn("did not find: " + changes.selector);
 			return logger.exit(false);
 		}
 	}
