@@ -1,6 +1,6 @@
 language: java
 jdk:
   - openjdk6
-  - oraclejdk6
+#  - oraclejdk6   Sun/Oracle JDK 6 is EOL since November 2012, and is no longer supported.
   - openjdk7
   - oraclejdk7
