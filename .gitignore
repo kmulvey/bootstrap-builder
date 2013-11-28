@@ -2,5 +2,10 @@
 .project
 .classpath
 .settings
-target
-/bin
+
+target/archive-tmp
+target/classes
+target/generated-sources
+target/maven-status
+
+bin
