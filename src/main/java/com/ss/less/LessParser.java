@@ -1,8 +1,13 @@
+package com.ss.less;
 import java.util.ArrayList;
 import java.util.Stack;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.ss.less.objects.Block;
+import com.ss.less.objects.LessObject;
+import com.ss.less.objects.Property;
 
 public class LessParser {
 	String file;

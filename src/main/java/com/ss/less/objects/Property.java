@@ -1,11 +1,12 @@
+package com.ss.less.objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Property extends LessObject {
 	private String prop;
-	String name;
-	String value;
-	boolean mixin = false;
+	public String name;
+	public String value;
+	public boolean mixin = false;
 	private Logger logger = LogManager.getLogger(Property.class.getName());
 
 	public Property(String property) {
