@@ -5,6 +5,8 @@ bootstrap-builder
 
 Bootstrap Builder allows you to create override files in a subdirectory of bootstrap/less/ thus keeping the source files unchanges and easy to update from upstream.
 
+## Usage
+`java -jar jar_file source_dir override_dir output_dir`
 
 ## Prerequisites
 
@@ -16,6 +18,8 @@ Bootstrap Builder allows you to create override files in a subdirectory of boots
 
 * Clone the repo: `git clone git@github.com:kmulvey/bootstrap-builder.git`.
 * `mvn install`
+creating the binary jar:
+`mvn clean compile assembly:single`
 
 
 ## Override file format
