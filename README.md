@@ -18,8 +18,7 @@ Bootstrap Builder allows you to create override files in a subdirectory of boots
 
 * Clone the repo: `git clone git@github.com:kmulvey/bootstrap-builder.git`.
 * `mvn install`
-creating the binary jar:
-`mvn clean compile assembly:single`
+* creating the binary jar: `mvn clean compile assembly:single`
 
 
 ## Override file format
