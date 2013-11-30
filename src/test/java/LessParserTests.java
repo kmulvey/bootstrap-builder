@@ -8,6 +8,7 @@ import org.junit.runners.JUnit4;
 
 import com.ss.less.LessParser;
 import com.ss.less.objects.Block;
+import com.ss.less.objects.Property;
 import com.ss.less.utils.FileUtil;
 
 @RunWith(JUnit4.class)
@@ -31,5 +32,21 @@ public class LessParserTests {
 		// count number of children in first block
 		Block first_ele = (Block) orig.getLessFile().get(0);
 		Assert.assertEquals(8, first_ele.children.size());
+		
+		// how many of each type?
+		int prop = 0, block = 0;
+		for(int i = 0; i<first_ele.children.size(); i++){
+			if(first_ele.children.get(i) instanceof Block){
+				block++;
+			}
+			else if(first_ele.children.get(i) instanceof Property){
+				prop++;
+			}
+			else{
+				Assert.fail("the nuber of props and blocks is wrong");
+			}
+		}
+		Assert.assertEquals(7, prop);
+		Assert.assertEquals(1, block);
 	}
 }
