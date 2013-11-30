@@ -9,10 +9,14 @@ import com.ss.less.utils.FileUtil;
 
 public class Main {
 
+	// there is some logic in here ... and because its the main() its untestable, that should be moved if possible
   public static void main(String[] args) {
   	String source_dir = args[0];
+  	if(source_dir.charAt(source_dir.length()) != '/') source_dir += '/';
   	String override_dir = args[1];
+  	if(override_dir.charAt(override_dir.length()) != '/') override_dir += '/';
   	String output_dir = args[2];
+  	if(output_dir.charAt(output_dir.length()) != '/') output_dir += '/';
   	
     // We will store the threads so that we can check if they are done
     List<Thread> threads = new ArrayList<Thread>();    
@@ -38,6 +42,8 @@ public class Main {
 		}
     
     // ATC keeps track of what flights are still en route
+		// use this for debugging purposes
+		/*
     int running = 0;
     do {
       running = 0;
@@ -46,8 +52,8 @@ public class Main {
           running++;
         }
       }
-      //System.out.println("We have " + running + " running threads. ");
+      System.out.println("We have " + running + " running threads. ");
     } while (running > 0);
-
+    */
   }
 }
