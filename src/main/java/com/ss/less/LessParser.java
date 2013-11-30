@@ -10,8 +10,8 @@ import com.ss.less.objects.LessObject;
 import com.ss.less.objects.Property;
 
 public class LessParser {
-	String file;
-	ArrayList<LessObject> lessFile;
+	private String file;
+	private ArrayList<LessObject> lessFile;
 	private Logger logger = LogManager.getLogger(LessParser.class.getName());
 
 
@@ -131,5 +131,12 @@ public class LessParser {
 		}
 		block_str.append("}");
 		return logger.exit(block_str.toString());
+	}
+	
+	public String getFile(){
+		return file;
+	}
+	public ArrayList<LessObject> getLessFile(){
+		return lessFile;
 	}
 }

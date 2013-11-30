@@ -15,10 +15,10 @@ public class LessMerger {
 
 	public LessMerger(LessParser orig, LessParser over) {
 		original = new Block("original");
-		original.children = orig.lessFile;
+		original.children = orig.getLessFile();
 
 		override = new Block("override");
-		override.children = over.lessFile;
+		override.children = over.getLessFile();
 	}
 
 	public void merge() {
