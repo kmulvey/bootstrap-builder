@@ -29,6 +29,6 @@ public class LessRunner implements Runnable {
 
 		FileUtil f = new FileUtil();
 		f.createWorkDir(output_dir);
-		f.writeMergedFile(output_dir, file_name, orig.toString());
+		f.writeFile(output_dir, file_name, orig.toString());
   }
 } 

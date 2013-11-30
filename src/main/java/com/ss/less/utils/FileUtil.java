@@ -44,7 +44,7 @@ public class FileUtil {
 	public void createWorkDir(String work_dir){
 		new File(work_dir).mkdir();
 	}
-	public void writeMergedFile(String dir, String name, String contents){
+	public void writeFile(String dir, String name, String contents){
 		File file = new File(dir + "/" + name);
 		FileWriter fw;
 		try {
