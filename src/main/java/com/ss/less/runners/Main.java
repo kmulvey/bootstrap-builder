@@ -12,11 +12,11 @@ public class Main {
 	// there is some logic in here ... and because its the main() its untestable, that should be moved if possible
   public static void main(String[] args) {
   	String source_dir = args[0];
-  	if(source_dir.charAt(source_dir.length()) != '/') source_dir += '/';
+  	if(source_dir.charAt(source_dir.length() -1) != '/') source_dir += '/';
   	String override_dir = args[1];
-  	if(override_dir.charAt(override_dir.length()) != '/') override_dir += '/';
+  	if(override_dir.charAt(override_dir.length() -1) != '/') override_dir += '/';
   	String output_dir = args[2];
-  	if(output_dir.charAt(output_dir.length()) != '/') output_dir += '/';
+  	if(output_dir.charAt(output_dir.length() -1) != '/') output_dir += '/';
   	
     // We will store the threads so that we can check if they are done
     List<Thread> threads = new ArrayList<Thread>();    
