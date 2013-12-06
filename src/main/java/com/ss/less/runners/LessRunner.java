@@ -21,8 +21,8 @@ public class LessRunner implements Runnable {
 		LessParser orig = new LessParser(original);
 		LessParser over = new LessParser(override);
 		
-		over.parseLess();
-		orig.parseLess();
+		over.parseLess(false);
+		orig.parseLess(true);
 
 		LessMerger lm = new LessMerger(orig, over);
 		lm.merge();

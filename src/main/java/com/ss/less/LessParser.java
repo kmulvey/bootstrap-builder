@@ -20,7 +20,7 @@ public class LessParser {
 		lessFile = new ArrayList<LessObject>();
 	}
 
-	public void parseLess() {
+	public void parseLess(boolean src_file) {
 		logger.entry();
 		String buffer = "";
 		Stack<Block> depth_stack = new Stack<Block>();
@@ -44,6 +44,8 @@ public class LessParser {
 					depth_stack.push(curr_block);
 				}
 				curr_block = new Block(buffer);
+				if(src_file) curr_block.setSrcFile(src_file);
+				curr_block.process();
 				buffer = "";
 				curly_count++;
 			} else if (c == '}') {

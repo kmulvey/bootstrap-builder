@@ -21,7 +21,7 @@ public class LessParserTests {
 		String file_contents = f.readFile(test_file);
 	
 		LessParser orig = new LessParser(file_contents);
-		orig.parseLess();
+		orig.parseLess(true);
 		
 		// how many blocks are in the file?
 		Assert.assertEquals(5, orig.getLessFile().size());
@@ -57,7 +57,7 @@ public class LessParserTests {
 		String file_contents = f.readFile(test_file);
 	
 		LessParser orig = new LessParser(file_contents);
-		orig.parseLess();
+		orig.parseLess(true);
 		
 		// how many blocks are in the file?
 		Assert.assertEquals(6, orig.getLessFile().size());

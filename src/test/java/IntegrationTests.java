@@ -22,8 +22,8 @@ public class IntegrationTests {
 		URL override_path = FileUtilTest.class.getResource("/less/wells.less");
 		LessParser over = new LessParser(f.readFile(new File(override_path.getPath())));
 
-		over.parseLess();
-		orig.parseLess();
+		over.parseLess(false);
+		orig.parseLess(true);
 
 		LessMerger lm = new LessMerger(orig, over);
 		lm.merge();
