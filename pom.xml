@@ -4,7 +4,7 @@
 	<groupId>com.ss.bootstrap-builder</groupId>
 	<artifactId>bootstrap-builder</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1.1</version>
+	<version>1.2.0</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -77,7 +77,6 @@
 					</archive>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
-						<descriptorRef>bin</descriptorRef>
 					</descriptorRefs>
 				</configuration>
 			</plugin>
