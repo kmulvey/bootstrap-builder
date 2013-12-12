@@ -37,10 +37,10 @@ public class FileUtil {
 			// order matters here, removing trailing whitespace needs to happen after removing new lines
 			// remove comments
 			result = result.replaceAll("(?s)/\\*.*?\\*/|(?-s)//(?![^()\r\n]*\\)).*", "");
+			// remove white space at EOL
+			result = result.replaceAll("\\s+\n", "");
 			// remove lines
 			result = result.replaceAll("\n", "");
-			// remove white space at EOL
-			result = result.replaceAll("[ \t]+$", "");
 		} catch (FileNotFoundException e) {
 			logger.catching(e);
 		}
