@@ -23,17 +23,15 @@ public class Main {
     
     
   	FileUtil f = new FileUtil();
-		ArrayList<File> etc_files = f.findFiles(source_dir);
-		for (int i = 0; i < etc_files.size(); i++) {
-			File override = new File(override_dir + etc_files.get(i).getName());
-			if (override.exists()) {
-				System.out.println("matched file " + etc_files.get(i).getName());
-				
+		ArrayList<File> source_files = f.findFiles(source_dir);
+		for (int i = 0; i < source_files.size(); i++) {
+			File override = new File(override_dir + source_files.get(i).getName());
+			if (override.exists()) {				
 				// Pimp out to a new thread
-				Runnable task = new LessRunner(f.readFile(etc_files.get(i)), f.readFile(override), etc_files.get(i).getName(), output_dir);
+				Runnable task = new LessRunner(f.readFile(source_files.get(i)), f.readFile(override), source_files.get(i).getName(), output_dir);
 	      Thread worker = new Thread(task);
 	      // We can set the name of the thread
-	      worker.setName(etc_files.get(i).getName());
+	      worker.setName(source_files.get(i).getName());
 	      // Start the thread, never call method run() direct
 	      worker.start();
 	      // Remember the thread for later usage
