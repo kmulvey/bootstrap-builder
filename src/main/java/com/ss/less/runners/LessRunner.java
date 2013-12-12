@@ -28,7 +28,7 @@ public class LessRunner implements Runnable {
 		lm.merge();
 
 		FileUtil f = new FileUtil();
-		f.createWorkDir(output_dir);
 		f.writeFile(output_dir, file_name, orig.toString());
+		System.out.println("merged file " + file_name);
   }
 } 
