@@ -34,13 +34,10 @@ public class FileUtil {
 
 		try {
 			result = new Scanner(f).useDelimiter("\\Z").next();
-			// order matters here, removing trailing whitespace needs to happen after removing new lines
 			// remove comments
 			result = result.replaceAll("(?s)/\\*.*?\\*/|(?-s)//(?![^()\r\n]*\\)).*", "");
 			// remove white space at EOL
-			result = result.replaceAll("\\s+\n", "");
-			// remove lines
-			result = result.replaceAll("\n", "");
+			result = result.replaceAll("\\s+$|\\s*\n", "");
 		} catch (FileNotFoundException e) {
 			logger.catching(e);
 		}
