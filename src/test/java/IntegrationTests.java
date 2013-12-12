@@ -46,4 +46,21 @@ public class IntegrationTests {
 		lm.merge();
 		Assert.assertEquals(expected, orig.toString());
 	}
+	
+	@Test
+	public void comments() {
+		String expected = ".well-large{padding: 24px;.border-radius(6px);}.well-sm{font-size: 10px;border: 3px;padding: 5px;color: red;}.well-large{padding: 24px;.border-radius(6px);}";
+		FileUtil f = new FileUtil();
+		URL src_path = IntegrationTests.class.getResource("/less/comments.orig.less");
+		LessParser orig = new LessParser(f.readFile(new File(src_path.getPath())));
+		URL override_path = IntegrationTests.class.getResource("/less/comments.less");
+		LessParser over = new LessParser(f.readFile(new File(override_path.getPath())));
+
+		over.parseLess(false);
+		orig.parseLess(true);
+
+		LessMerger lm = new LessMerger(orig, over);
+		lm.merge();
+		Assert.assertEquals(expected, orig.toString());
+	}
 }
