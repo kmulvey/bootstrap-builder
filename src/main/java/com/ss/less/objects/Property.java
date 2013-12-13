@@ -25,27 +25,9 @@ public class Property extends LessObject {
 		}
 
 		if (prop.trim().contains(":")) {
-			String[] property = prop.split(":");
-
-			// IE hacks like progid:DXImageTransform screw this up
-			if (property.length > 2) {
-				String buffer = "";
-				boolean first_colon = false;
-				for (int i = 0; i < prop.length(); i++) {
-					char c = prop.charAt(i);
-					if (c == ':' && first_colon == false) {
-						name = buffer;
-						first_colon = true;
-						buffer = "";
-					} else {
-						buffer += c;
-					}
-				}
-				value = buffer;
-			} else {
-				name = property[0].trim();
-				value = property[1].trim();
-			}
+			int index = prop.indexOf(":");
+			name = prop.substring(0, index).trim();
+			value = prop.substring(index + 1, prop.length()).trim();
 		}
 		// this looks like a mixin
 		else {

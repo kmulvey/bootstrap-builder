@@ -33,6 +33,7 @@ public class PropertyTest {
 		Assert.assertEquals("12px auto", p.getValue());
 		Assert.assertEquals(false, p.isMixin());
 	}
+
 	// vendor
 	@Test
 	public void vendorPrefixTest() {
@@ -58,6 +59,7 @@ public class PropertyTest {
 		Assert.assertEquals("15px", p.getValue());
 		Assert.assertEquals(false, p.isMixin());
 	}
+
 	// mixins
 	@Test
 	public void mixinPrefixTest() {
@@ -67,15 +69,6 @@ public class PropertyTest {
 		Assert.assertEquals("", p.getValue());
 		Assert.assertEquals(true, p.isMixin());
 	}
-	@Test
-	public void multiMixinPrefixTest() {
-		Property p = new Property("	#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))");
-		Assert.assertEquals(null, p.getAction());
-		Assert.assertEquals("#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))", p.getName());
-		Assert.assertEquals("", p.getValue());
-		Assert.assertEquals(true, p.isMixin());
-	}
-	
 	@Test
 	public void addMixinPrefixTest() {
 		Property p = new Property("+  .box-sizing(border-box)");
@@ -93,11 +86,53 @@ public class PropertyTest {
 		Assert.assertEquals(true, p.isMixin());
 	}
 	@Test
+	public void multiMixinPrefixTest() {
+		Property p = new Property("  #gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))");
+		Assert.assertEquals(null, p.getAction());
+		Assert.assertEquals("#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))", p.getName());
+		Assert.assertEquals("", p.getValue());
+		Assert.assertEquals(true, p.isMixin());
+	}
+	@Test
+	public void addMultiMixinPrefixTest() {
+		Property p = new Property("+  #gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))");
+		Assert.assertEquals("add", p.getAction());
+		Assert.assertEquals("#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))", p.getName());
+		Assert.assertEquals("", p.getValue());
+		Assert.assertEquals(true, p.isMixin());
+	}
+	@Test
+	public void removeMultiMixinPrefixTest() {
+		Property p = new Property("-  #gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))");
+		Assert.assertEquals("remove", p.getAction());
+		Assert.assertEquals("#gradient > .vertical(@dropdownLinkBackgroundHover, darken(@dropdownLinkBackgroundHover, 5%))", p.getName());
+		Assert.assertEquals("", p.getValue());
+		Assert.assertEquals(true, p.isMixin());
+	}
+	
+	// IE filter
+	@Test
 	public void IEHackTest() {
-		Property p = new Property("filter: e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))");
+		Property p = new Property("   filter: e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))");
 		Assert.assertEquals(null, p.getAction());
 		Assert.assertEquals("filter", p.getName());
-		Assert.assertEquals(" e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))", p.getValue());
+		Assert.assertEquals("e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))", p.getValue());
+		Assert.assertEquals(false, p.isMixin());
+	}
+	@Test
+	public void addIEHackTest() {
+		Property p = new Property("+  filter: e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))");
+		Assert.assertEquals("add", p.getAction());
+		Assert.assertEquals("filter", p.getName());
+		Assert.assertEquals("e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))", p.getValue());
+		Assert.assertEquals(false, p.isMixin());
+	}
+	@Test
+	public void removeIEHackTest() {
+		Property p = new Property("-  filter: e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))");
+		Assert.assertEquals("remove", p.getAction());
+		Assert.assertEquals("filter", p.getName());
+		Assert.assertEquals("e(%(\"progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)\",argb(@startColor),argb(@endColor)))", p.getValue());
 		Assert.assertEquals(false, p.isMixin());
 	}
 }
