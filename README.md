@@ -33,6 +33,9 @@ The format of this file looks similar to a diff file and tweaking an actual diff
 `+ background: #333;`
 
 * **Remove a block**: selector line begins with a '-'.  There is no need to give the contents of the block as we are simply going to find that selector and remove the whole thing.
+
+**It is important that there not be any space in front of the +/-, they cannot have space or tabs before them.**
+
 ```
 -.well-small {
 }
