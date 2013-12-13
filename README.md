@@ -11,7 +11,7 @@ Bootstrap Builder allows you to create override files in a subdirectory of boots
 ## Prerequisites
 
 * JRE 7 is not required but is highly reccomended as JRE6 is EOL
-* java 7: [openjdk](http://openjdk.java.net/install/) or [oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* JRE 7: [openjdk](http://openjdk.java.net/install/) or [oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [maven 3](https://maven.apache.org/download.cgi)
 
 
