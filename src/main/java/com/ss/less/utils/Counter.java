@@ -3,6 +3,7 @@ package com.ss.less.utils;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class Counter {
@@ -17,10 +18,16 @@ public class Counter {
   }
   public static void tally(){
   	Iterator it = counts.entrySet().iterator();
+  	Map<Integer, String> reversedMap = new TreeMap<Integer, String>();
     while (it.hasNext()) {
         Map.Entry pairs = (Map.Entry)it.next();
-        System.out.println(pairs.getKey() + " = " + pairs.getValue());
+        reversedMap.put((Integer) pairs.getValue(), pairs.getKey().toString());
         it.remove(); // avoids a ConcurrentModificationException
+    }
+    
+    
+    for (Map.Entry entry : reversedMap.entrySet()) {
+        System.out.println(entry.getKey() + " - "  + entry.getValue());
     }
   }
 }

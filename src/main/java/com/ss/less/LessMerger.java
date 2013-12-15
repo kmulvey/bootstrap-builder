@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import com.ss.less.objects.Block;
 import com.ss.less.objects.LessObject;
 import com.ss.less.objects.Property;
+import com.ss.less.utils.Counter;
 
 public class LessMerger {
 	Block original;
@@ -22,12 +23,14 @@ public class LessMerger {
 	}
 
 	public void merge() {
+		Counter.bump(Thread.currentThread().getStackTrace()[1].getClassName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 		// init the tree for recursive calling
 		Stack<String> tree = new Stack<String>();
 		processOverrideBlocks(override, tree);
 	}
 
 	public void processOverrideBlocks(Block b, Stack<String> tree) {
+		Counter.bump(Thread.currentThread().getStackTrace()[1].getClassName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 		logger.entry();
 		tree.add(b.selector);
 		for (LessObject child : b.children) {
@@ -55,6 +58,7 @@ public class LessMerger {
 	}
 
 	public boolean applyUpdates(Block b, LessObject changes, Stack<String> tree) {
+		Counter.bump(Thread.currentThread().getStackTrace()[1].getClassName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 		logger.entry();
 		tree.remove("override");
 		for (int i = 0; i < b.children.size(); i++) {
@@ -132,6 +136,7 @@ public class LessMerger {
 	}
 
 	public boolean findBlock(Block source, Block changes) {
+		Counter.bump(Thread.currentThread().getStackTrace()[1].getClassName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 		// add block to root level
 		if (changes.action.equals("add")) {
 			source.children.add(changes);

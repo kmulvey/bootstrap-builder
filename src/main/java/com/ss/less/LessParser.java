@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.ss.less.objects.Block;
 import com.ss.less.objects.LessObject;
 import com.ss.less.objects.Property;
+import com.ss.less.utils.Counter;
 
 public class LessParser {
 	private String file;
@@ -21,6 +22,7 @@ public class LessParser {
 	}
 
 	public void parseLess(boolean src_file) {
+		Counter.bump(Thread.currentThread().getStackTrace()[1].getClassName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 		logger.entry();
 		String buffer = "";
 		Stack<Block> depth_stack = new Stack<Block>();
@@ -101,6 +103,7 @@ public class LessParser {
 	}
 
 	public String toString() {
+		Counter.bump(Thread.currentThread().getStackTrace()[1].getClassName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 		logger.entry();
 		StringBuilder file = new StringBuilder();
 
@@ -119,6 +122,7 @@ public class LessParser {
 	}
 
 	public String printBlock(Block b) {
+		Counter.bump(Thread.currentThread().getStackTrace()[1].getClassName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName());
 		logger.entry();
 		StringBuilder block_str = new StringBuilder();
 		block_str.append(b.selector + "{");
