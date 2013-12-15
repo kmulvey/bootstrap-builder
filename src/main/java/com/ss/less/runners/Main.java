@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ss.less.utils.Counter;
 import com.ss.less.utils.FileUtil;
 
 public class Main {
@@ -41,7 +42,7 @@ public class Main {
     
     // ATC keeps track of what flights are still en route
 		// use this for debugging purposes
-		/*
+
     int running = 0;
     do {
       running = 0;
@@ -50,8 +51,8 @@ public class Main {
           running++;
         }
       }
-      System.out.println("We have " + running + " running threads. ");
+      //System.out.println("We have " + running + " running threads. ");
     } while (running > 0);
-    */
+    Counter.tally();
   }
 }
