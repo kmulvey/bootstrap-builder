@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/kmulvey/bootstrap-builder.png?branch=master)](https://travis-ci.org/kmulvey/bootstrap-builder)
+[![Coverage Status](https://coveralls.io/repos/kmulvey/bootstrap-builder/badge.png?branch=master)](https://coveralls.io/r/kmulvey/bootstrap-builder?branch=master)
 
 bootstrap-builder
 =================
