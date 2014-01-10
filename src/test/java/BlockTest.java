@@ -96,6 +96,13 @@ public class BlockTest {
 		Assert.assertEquals(null, b.getAction());
 		Assert.assertEquals(".vertical-three-colors(@startColor: #00b3ee,@midColor: #7a43b6,@colorStop: 50%,@endColor: #c3325f)", b.getSelector());
 	}
-	
+	@Test
+	public void renameMixin() {
+		Block b = new Block(".box-shadow(@shadow)%.box-shadow(@shadowA, @shadowB:X, ...)");
+		b.process();
+		Assert.assertEquals("update", b.getAction());
+		Assert.assertEquals(".box-shadow(@shadow)", b.getSelector());
+		Assert.assertEquals(".box-shadow(@shadowA,@shadowB:X,...)", b.updated_selector[1]);
+	}
 	// need update tests
 }
