@@ -10,8 +10,8 @@ import com.ss.less.objects.LessObject;
 import com.ss.less.objects.Property;
 
 public class LessMergerII {
-	Block original;
-	Block override;
+	private Block original;
+	private Block override;
 	private Logger logger = LogManager.getLogger(LessMergerII.class.getName());
 	int blocks = 0, props = 0;
 
@@ -40,7 +40,7 @@ public class LessMergerII {
 					blocks++;
 					logger.info(curr_block.action + ": " + curr_block.selector);
 					// we need to find the corresponding block in the original file and pass that into the router
-					
+					findBlock(original, curr_block, tree);
 				} 
 				// Block was provided for structure purposes, we need to dig into it to find changes
 				else {
@@ -72,7 +72,36 @@ public class LessMergerII {
 		logger.info("removing last ele from tree");
 		tree.remove(tree.size() - 1);
 	}
-
+	
+	public boolean findBlock(Block source, Block changes, Stack<String> tree) {
+		// add block to root level
+		if(tree.size() == 0 && changes.action.equals("add")) {
+			source.children.add(changes);
+			logger.info("added: " + changes.selector);
+			return logger.exit(true);
+		} else {
+			// loop to find the correct block
+			for (int j = 0; j < source.children.size(); j++) {
+				if (source.children.get(j) instanceof Block) {
+					Block loop_block = (Block) source.children.get(j);
+					if (loop_block.selector.equals(changes.selector)) {
+						if (changes.action.equals("remove")) {
+							source.children.remove(j);
+							logger.info("removed: " + changes.selector);
+							return logger.exit(true);
+						} else if (changes.action.equals("update")) {
+							changes.selector = changes.updated_selector[1];
+							loop_block.selector = changes.selector;
+							logger.info("updated: " + changes.selector);
+							return logger.exit(true);
+						}
+					}
+				}
+			}
+			return logger.exit(false);
+		}
+	}
+	
 	// this acts as a router to the real action functions add/remove/update
 	private void actionRouter(Block original, LessObject changes){
 		switch(changes.action) {
