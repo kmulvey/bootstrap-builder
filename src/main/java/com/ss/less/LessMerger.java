@@ -26,7 +26,7 @@ public class LessMerger {
 		Stack<String> tree = new Stack<String>();
 		processOverrideBlocks(override, tree);
 	}
-
+	// iterate through the override tree and find changes, then call applyUpdates to actually make them
 	public void processOverrideBlocks(Block b, Stack<String> tree) {
 		logger.entry();
 		tree.add(b.selector);
@@ -131,6 +131,7 @@ public class LessMerger {
 		return logger.exit(false);
 	}
 
+	// this finds and applys changes to blocks
 	public boolean findBlock(Block source, Block changes) {
 		// add block to root level
 		if (changes.action.equals("add")) {
