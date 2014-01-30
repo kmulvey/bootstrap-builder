@@ -61,4 +61,13 @@ public class Block extends LessObject {
 		logger.entry();
 		src_file = src;
 	}
+	public boolean isLeaf(Block b) {
+		logger.entry();
+		for (int j = 0; j < b.children.size(); j++) {
+			if(b.children.get(j) instanceof Block){
+				return false;
+			}
+		}
+		return true;
+	}	
 }
