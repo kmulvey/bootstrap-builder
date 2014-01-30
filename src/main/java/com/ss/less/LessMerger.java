@@ -54,6 +54,7 @@ public class LessMerger {
 		tree.remove(tree.size() - 1);
 	}
 
+	// this is a misnamed function, when called the changes have already been found.  It is now going to search the original to apply the changes
 	public boolean applyUpdates(Block b, LessObject changes, Stack<String> tree) {
 		logger.entry();
 		tree.remove("override");
