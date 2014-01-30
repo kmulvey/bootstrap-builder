@@ -39,10 +39,11 @@ public class LessMergerII {
 				if (curr_block.action != null) {
 					blocks++;
 					logger.info(curr_block.action + ": " + curr_block.selector);
-				}
+					// we need to find the corresponding block in the original file and pass that into the router
+					
+				} 
 				// Block was provided for structure purposes, we need to dig into it to find changes
 				else {
-					blocks++;
 					logger.info("block: " + curr_block.selector);
 					for (int j = 0; j < curr_block.children.size(); j++) {
 						// Found another block, pass go, collect $200
@@ -70,6 +71,28 @@ public class LessMergerII {
 		}
 		logger.info("removing last ele from tree");
 		tree.remove(tree.size() - 1);
+	}
+
+	// this acts as a router to the real action functions add/remove/update
+	private void actionRouter(Block original, LessObject changes){
+		switch(changes.action) {
+		  case "add":  add(original, changes);  break;
+		  case "remove": remove(original, changes);  break;
+		  case "update": update(original, changes);  break;
+		}
+	}
+	// this adds LessObjects to a block
+	private void add(Block original, LessObject changes){
+		original.children.add(changes);
+	}
+	// this removes LessObjects from a block
+	private void remove(Block original, LessObject changes){
+		
+	}
+	// this updates a block's selector or mixin's signature
+	// this can only be called once this LessObject's children have had their changes made, otherwise we will no longer be able to match its selector with the original
+	private void update(Block original, LessObject changes){
+	
 	}
 }
 

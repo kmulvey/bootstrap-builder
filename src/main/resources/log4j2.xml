@@ -16,10 +16,10 @@
 			<AppenderRef ref="Console" />
 		</Root>
 		<Root level="info">
-			<AppenderRef ref="bitbucket" />
+			<AppenderRef ref="Console" />
 		</Root>
 		<Root level="debug">
-			<AppenderRef ref="bitbucket" />
+			<AppenderRef ref="Console" />
 		</Root>
 	</Loggers>
 </Configuration>
