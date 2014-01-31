@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Block extends LessObject {
-	public String selector;
+	private String selector;
 	private boolean src_file;
 	public ArrayList<LessObject> children;
 	public String[] updated_selector;

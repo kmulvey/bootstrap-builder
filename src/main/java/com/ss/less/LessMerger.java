@@ -29,7 +29,7 @@ public class LessMerger {
 	// iterate through the override tree and find changes, then call applyUpdates to actually make them
 	public void processOverrideBlocks(Block b, Stack<String> tree) {
 		logger.entry();
-		tree.add(b.selector);
+		tree.add(b.getSelector());
 		for (LessObject child : b.children) {
 			// this if else is used to determine if we need to recurse
 			if (child instanceof Block) {
@@ -64,7 +64,7 @@ public class LessMerger {
 
 				if (tree.size() > 0) {
 					// find the right block
-					if (curr_block.selector.equals(tree.firstElement())) {
+					if (curr_block.getSelector().equals(tree.firstElement())) {
 						// this is premature because there may be more than one block with the same selector
 						//tree.remove(tree.firstElement());
 
@@ -82,10 +82,10 @@ public class LessMerger {
 							if (changes instanceof Block) {
 								Block change_bock = (Block) changes;
 								if(findBlock(curr_block, change_bock)){
-									logger.info(change_bock.action + ": " + change_bock.selector);
+									logger.info(change_bock.action + ": " + change_bock.getSelector());
 									return logger.exit(true);
 								}else{
-									logger.info("keep looking for " + change_bock.selector);
+									logger.info("keep looking for " + change_bock.getSelector());
 									continue;
 								}
 
@@ -137,22 +137,22 @@ public class LessMerger {
 		// add block to root level
 		if (changes.action.equals("add")) {
 			source.children.add(changes);
-			logger.info("added: " + changes.selector);
+			logger.info("added: " + changes.getSelector());
 			return logger.exit(true);
 		} else {
 			// loop to find the correct block to remove
 			for (int j = 0; j < source.children.size(); j++) {
 				if (source.children.get(j) instanceof Block) {
 					Block loop_block = (Block) source.children.get(j);
-					if (loop_block.selector.equals(changes.selector)) {
+					if (loop_block.getSelector().equals(changes.getSelector())) {
 						if (changes.action.equals("remove")) {
 							source.children.remove(j);
-							logger.info("removed: " + changes.selector);
+							logger.info("removed: " + changes.getSelector());
 							return logger.exit(true);
 						} else if (changes.action.equals("update")) {
-							changes.selector = changes.updated_selector[1];
-							loop_block.selector = changes.selector;
-							logger.info("updated: " + changes.selector);
+							changes.setSelector(changes.updated_selector[1]);
+							loop_block.setSelector(changes.getSelector());
+							logger.info("updated: " + changes.getSelector());
 							return logger.exit(true);
 						}
 					}

@@ -121,7 +121,7 @@ public class LessParser {
 	public String printBlock(Block b) {
 		logger.entry();
 		StringBuilder block_str = new StringBuilder();
-		block_str.append(b.selector + "{");
+		block_str.append(b.getSelector() + "{");
 		for (int i = 0; i < b.children.size(); i++) {
 			if (b.children.get(i) instanceof Block)
 				block_str.append(printBlock((Block) b.children.get(i))); // if its a block recursively process it
