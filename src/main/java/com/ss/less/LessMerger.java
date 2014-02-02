@@ -150,7 +150,7 @@ public class LessMerger {
 							logger.info("removed: " + changes.getSelector());
 							return logger.exit(true);
 						} else if (changes.action.equals("update")) {
-							changes.setSelector(changes.updated_selector[1]);
+							changes.setSelector(changes.getupdatedSelector()[1]);
 							loop_block.setSelector(changes.getSelector());
 							logger.info("updated: " + changes.getSelector());
 							return logger.exit(true);
