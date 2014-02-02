@@ -52,7 +52,7 @@ public class BlockTest {
 		b.process();
 		Assert.assertEquals("update", b.getAction());
 		Assert.assertEquals(".form-emphasis", b.getSelector());
-		Assert.assertEquals(2, b.updated_selector.length);
+		Assert.assertEquals(2, b.getupdatedSelector().length);
 	}
 	@Test
 	public void quotedBlockTest() {
@@ -102,7 +102,7 @@ public class BlockTest {
 		b.process();
 		Assert.assertEquals("update", b.getAction());
 		Assert.assertEquals(".box-shadow(@shadow)", b.getSelector());
-		Assert.assertEquals(".box-shadow(@shadowA,@shadowB:X,...)", b.updated_selector[1]);
+		Assert.assertEquals(".box-shadow(@shadowA,@shadowB:X,...)", b.getupdatedSelector()[1]);
 	}
 	// need update tests
 }
