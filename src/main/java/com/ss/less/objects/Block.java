@@ -8,7 +8,7 @@ public class Block extends LessObject {
 	private String selector;
 	private boolean src_file;
 	public ArrayList<LessObject> children;
-	public String[] updated_selector;
+	private String[] updated_selector;
 	private Logger logger = LogManager.getLogger(Block.class.getName());
 
 	public Block(String sel) {
@@ -52,6 +52,16 @@ public class Block extends LessObject {
 		logger.entry();
 		selector = sel;
 	}
+	
+	public String[] getupdatedSelector() {
+		return logger.exit(updated_selector);
+	}
+
+	public void setupdatedSelector(String sel) {
+		logger.entry();
+		selector = sel;
+	}
+	
 	public void setSrcFile(boolean src) {
 		logger.entry();
 		src_file = src;
