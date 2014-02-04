@@ -111,7 +111,7 @@ public class LessParser {
 			// this is a mixin at the root level
 			else{
 				Property p = (Property) lessFile.get(i);
-				file.append(p.name + ";");
+				file.append(p.getName() + ";");
 			}
 		}
 
@@ -127,8 +127,8 @@ public class LessParser {
 				block_str.append(printBlock((Block) b.children.get(i))); // if its a block recursively process it
 			else {
 				Property p = (Property) b.children.get(i);
-				if(p.mixin) block_str.append(p.name).append(";");
-				else block_str.append(p.name).append(": ").append(p.value).append(";");
+				if(p.mixin) block_str.append(p.getName()).append(";");
+				else block_str.append(p.getName()).append(": ").append(p.value).append(";");
 			}
 		}
 		block_str.append("}");

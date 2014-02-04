@@ -97,7 +97,7 @@ public class LessMerger {
 								// adds
 								if (p.action.equals("add")) {
 									curr_block.children.add(p);
-									logger.info("added: " + p.name + ": " + p.value);
+									logger.info("added: " + p.getName() + ": " + p.value);
 									return logger.exit(true);
 								}
 								// removes
@@ -106,15 +106,15 @@ public class LessMerger {
 									for (int j = 0; j < curr_block.children.size(); j++) {
 										if (curr_block.children.get(j) instanceof Property) {
 											Property curr_prop = (Property) curr_block.children.get(j);
-											if (curr_prop.name.equals(p.name) && curr_prop.value.equals(p.value)) {
+											if (curr_prop.getName().equals(p.getName()) && curr_prop.value.equals(p.value)) {
 												curr_block.children.remove(j);
-												logger.info("removed: " + p.name + ": " + p.value);
+												logger.info("removed: " + p.getName() + ": " + p.value);
 												return logger.exit(true);
 											}
 										}
 									}
 									// this is premature because there may be another block with the same selector further down the loop
-									logger.warn("did not find: " + p.name + ": " + p.value);
+									logger.warn("did not find: " + p.getName() + ": " + p.value);
 									//return logger.exit(false);
 								}
 							}
