@@ -128,7 +128,7 @@ public class LessParser {
 			else {
 				Property p = (Property) b.children.get(i);
 				if(p.mixin) block_str.append(p.getName()).append(";");
-				else block_str.append(p.getName()).append(": ").append(p.value).append(";");
+				else block_str.append(p.getName()).append(": ").append(p.getValue()).append(";");
 			}
 		}
 		block_str.append("}");
