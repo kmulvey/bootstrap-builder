@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 public class Property extends LessObject {
 	private String prop;
 	private String name;
-	public String value;
+	private String value;
 	public boolean mixin = false;
 	private Logger logger = LogManager.getLogger(Property.class.getName());
 
