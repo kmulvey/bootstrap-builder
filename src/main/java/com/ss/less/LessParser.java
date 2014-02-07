@@ -75,7 +75,7 @@ public class LessParser {
 			// set the property
 			else if (c == ';' && paren_count == 0) {
 				Property prop = new Property(buffer);
-				if(curly_count == 0 && prop.mixin){
+				if(curly_count == 0 && prop.isMixin()){
 					lessFile.add(prop);
 				}else{
 					curr_block.children.add(prop);
@@ -127,7 +127,7 @@ public class LessParser {
 				block_str.append(printBlock((Block) b.children.get(i))); // if its a block recursively process it
 			else {
 				Property p = (Property) b.children.get(i);
-				if(p.mixin) block_str.append(p.getName()).append(";");
+				if(p.isMixin()) block_str.append(p.getName()).append(";");
 				else block_str.append(p.getName()).append(": ").append(p.getValue()).append(";");
 			}
 		}

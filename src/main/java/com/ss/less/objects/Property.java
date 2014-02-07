@@ -6,7 +6,7 @@ public class Property extends LessObject {
 	private String prop;
 	private String name;
 	private String value;
-	public boolean mixin = false;
+	private boolean mixin = false;
 	private Logger logger = LogManager.getLogger(Property.class.getName());
 
 	public Property(String property) {
