@@ -104,5 +104,13 @@ public class BlockTest {
 		Assert.assertEquals(".box-shadow(@shadow)", b.getSelector());
 		Assert.assertEquals(".box-shadow(@shadowA,@shadowB:X,...)", b.getupdatedSelector()[1]);
 	}
+	@Test
+	public void setSelector() {
+		Block b = new Block("  +  .form-emphasis");
+		b.process();
+		Assert.assertEquals(".form-emphasis", b.getSelector());
+		b.setSelector("form.form-emphasis .form-control");
+		Assert.assertEquals("form.form-emphasis .form-control", b.getSelector());
+	}
 	// need update tests
 }
