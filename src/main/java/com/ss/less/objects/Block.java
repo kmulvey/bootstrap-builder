@@ -56,11 +56,6 @@ public class Block extends LessObject {
 	public String[] getupdatedSelector() {
 		return logger.exit(updated_selector);
 	}
-
-	public void setupdatedSelector(String sel) {
-		logger.entry();
-		selector = sel;
-	}
 	
 	public void setSrcFile(boolean src) {
 		logger.entry();

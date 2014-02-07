@@ -112,5 +112,6 @@ public class BlockTest {
 		b.setSelector("form.form-emphasis .form-control");
 		Assert.assertEquals("form.form-emphasis .form-control", b.getSelector());
 	}
+
 	// need update tests
 }
