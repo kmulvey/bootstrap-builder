@@ -2,6 +2,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,5 +31,20 @@ public class FileUtilTest {
 		Assert.assertEquals(expected, file_contents);
 		Assert.assertEquals(false, file_contents.contains("block"));
 		Assert.assertEquals(false, file_contents.contains("single"));
+	}
+
+	@Test
+	public void cresteWorkDir() {
+		String dir = "/tmp/bootstrap";
+		FileUtil f = new FileUtil();
+		f.createWorkDir(dir);
+		File saveDir = new File(dir);
+		Assert.assertEquals(true, saveDir.exists());
+	}
+
+	@After
+	public void deleteWorkDir() {
+		File directory = new File("/tmp/bootstrap");
+		directory.delete();
 	}
 }
