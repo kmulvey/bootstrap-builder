@@ -32,6 +32,13 @@ public class FileUtilTest {
 		Assert.assertEquals(false, file_contents.contains("block"));
 		Assert.assertEquals(false, file_contents.contains("single"));
 	}
+	
+	@Test(expected=NullPointerException.class)
+	public void readNullFileTest() {
+		FileUtil f = new FileUtil();
+		File test_file = null;
+		f.readFile(test_file);
+	}
 
 	@Test
 	public void cresteWorkDir() {

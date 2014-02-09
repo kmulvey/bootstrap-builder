@@ -39,6 +39,7 @@ public class FileUtil {
 			// remove white space at EOL
 			result = result.replaceAll("\\s+$|\\s*\n", "");
 		} catch (FileNotFoundException e) {
+			logger.error("Unable to read the input file.");
 			logger.catching(e);
 		}
 		return logger.exit(result);
