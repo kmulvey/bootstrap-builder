@@ -33,11 +33,12 @@ public class FileUtilTest {
 		Assert.assertEquals(false, file_contents.contains("single"));
 	}
 	
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void readNullFileTest() {
 		FileUtil f = new FileUtil();
-		File test_file = null;
+		File test_file = new File("/tmp/RandomNumbers");
 		f.readFile(test_file);
+		// nothing happens here because the exception is caught in the try{}
 	}
 
 	@Test
