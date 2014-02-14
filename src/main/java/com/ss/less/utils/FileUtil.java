@@ -49,6 +49,7 @@ public class FileUtil {
 		new File(work_dir).mkdir();
 	}
 	public void writeFile(String dir, String name, String contents){
+		// TODO: check if they put / in the dir or name
 		File file = new File(dir + "/" + name);
 		FileWriter fw;
 		try {
@@ -57,7 +58,8 @@ public class FileUtil {
 			bw.write(contents);
 			bw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Unable to write the file to:" + dir + "/" + name);
+			logger.catching(e);
 		}
 	}
 }

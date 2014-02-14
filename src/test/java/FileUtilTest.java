@@ -1,6 +1,8 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -39,6 +41,27 @@ public class FileUtilTest {
 		File test_file = new File("/tmp/RandomNumbers");
 		f.readFile(test_file);
 		// nothing happens here because the exception is caught in the try{}
+	}
+	
+	@Test
+	public void writeFileTest() {
+		FileUtil f = new FileUtil();
+		f.writeFile("/tmp", "bootstrap-test", "abc");
+		File rand = new File("/tmp/bootstrap-test");
+		try {
+			@SuppressWarnings("resource")
+			String result = new Scanner(rand).useDelimiter("\\Z").next();
+			Assert.assertEquals("abc", result);
+		}
+		catch (FileNotFoundException e) {
+			Assert.fail("unable to read the file that was allegedly written");
+		}
+	}
+	@Test
+	public void writeFileDeniedTest() {
+		FileUtil f = new FileUtil();
+		f.writeFile("/home/nothing", "bootstrap-test", "abc");
+		// should have caught the IO exception
 	}
 
 	@Test
