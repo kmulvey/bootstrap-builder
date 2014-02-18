@@ -1,6 +1,9 @@
 package com.ss.less.runners;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ss.less.LessMerger;
 import com.ss.less.LessParser;
 import com.ss.less.utils.FileUtil;
@@ -8,6 +11,7 @@ import com.ss.less.utils.FileUtil;
 
 public class LessRunner implements Runnable {
   private String override, original, file_name, output_dir;
+  private Logger logger = LogManager.getLogger(LessRunner.class.getName());
 
   LessRunner(String orig, String over, String f_name, String o_dir) {
     this.override = over;
@@ -29,6 +33,6 @@ public class LessRunner implements Runnable {
 
 		FileUtil f = new FileUtil();
 		f.writeFile(output_dir, file_name, orig.toString());
-		System.out.println("merged file " + file_name);
+		logger.info("merged file " + file_name);
   }
 } 
