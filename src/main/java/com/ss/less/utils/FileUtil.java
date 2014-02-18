@@ -39,8 +39,7 @@ public class FileUtil {
 			// remove white space at EOL
 			result = result.replaceAll("\\s+$|\\s*\n", "");
 		} catch (FileNotFoundException e) {
-			logger.error("Unable to read the input file.");
-			logger.catching(e);
+			logger.error("Unable to read the input file: " + f.getAbsolutePath());
 		}
 		return logger.exit(result);
 	}
@@ -58,8 +57,7 @@ public class FileUtil {
 			bw.write(contents);
 			bw.close();
 		} catch (IOException e) {
-			logger.error("Unable to write the file to:" + dir + "/" + name);
-			logger.catching(e);
+			logger.error("Unable to write the file to: " + dir + "/" + name);
 		}
 	}
 }
