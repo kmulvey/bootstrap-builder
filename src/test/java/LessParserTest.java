@@ -12,7 +12,7 @@ import com.ss.less.objects.Property;
 import com.ss.less.utils.FileUtil;
 
 @RunWith(JUnit4.class)
-public class LessParserTests {
+public class LessParserTest {
 	@Test
 	public void simpleSourceFileTest() {
 		FileUtil f = new FileUtil();
