@@ -3,9 +3,11 @@ package com.ss.less.runners;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +27,10 @@ public class Main {
 		options.addOption("s", "source", true, "path to source files");
 		options.addOption("o", "override", true, "path to override files");
 		options.addOption("w", "workdir", true, "path to override files");
-
+		
+		// automatically generate the help statement
+		HelpFormatter formatter = new HelpFormatter();
+		
 		try {
 			// parse the command line arguments
 			CommandLine line = parser.parse(options, args);
@@ -36,6 +41,7 @@ public class Main {
 			}
 			else {
 				logger.fatal("Source directory must be specified.");
+				formatter.printHelp( "bootstrap-builder", options );
 				return;
 			}
 
@@ -45,6 +51,7 @@ public class Main {
 			}
 			else {
 				logger.fatal("Override directory must be specified.");
+				formatter.printHelp( "bootstrap-builder", options );
 				return;
 			}
 
@@ -54,13 +61,15 @@ public class Main {
 			}
 			else {
 				logger.fatal("Work directory must be specified.");
+				formatter.printHelp( "bootstrap-builder", options );
 				return;
 			}
 		}
 		catch (org.apache.commons.cli.ParseException e) {
-			logger.fatal("Arguments are incorrect: " + e.getMessage());
+			logger.fatal(e.getMessage());
+			formatter.printHelp( "bootstrap-builder", options );
 			return;
-		}
+		}		
 
 		// trailing slashes
 		if (source_dir.charAt(source_dir.length() - 1) != '/')
