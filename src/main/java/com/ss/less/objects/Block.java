@@ -24,18 +24,11 @@ public class Block extends LessObject {
 			action = "add";
 			selector = selector.substring(1).trim().replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " set to be added.");
-		} else if (!src_file && selector.contains("%")) {
-			if (!selector.matches(".*\\(.*%.*\\)")) {
+		} else if (!src_file && selector.contains("%RENAME%")) {
 				action = "update";
-				updated_selector = selector.trim().replaceAll(",\\s*", ",").split("%");
+				updated_selector = selector.trim().replaceAll(",\\s*", ",").split("%RENAME%");
 				selector = updated_selector[0].trim();
 				logger.info("selector: " + selector + " to be updated.");
-			}
-			// this is not an update, it just has a % in it
-			else {
-				selector = selector.trim().replaceAll(",\\s*", ",");
-				logger.info("selector: " + selector + " read.");
-			}
 		} else {
 			selector = selector.replaceAll(",\\s*", ",");
 			logger.info("selector: " + selector + " read.");

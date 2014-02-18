@@ -48,7 +48,7 @@ public class BlockTest {
 	}
 	@Test
 	public void replaceBlockTest() {
-		Block b = new Block(".form-emphasis%.form-basic");
+		Block b = new Block(".form-emphasis%RENAME%.form-basic");
 		b.process();
 		Assert.assertEquals("update", b.getAction());
 		Assert.assertEquals(".form-emphasis", b.getSelector());
@@ -96,14 +96,14 @@ public class BlockTest {
 		Assert.assertEquals(null, b.getAction());
 		Assert.assertEquals(".vertical-three-colors(@startColor: #00b3ee,@midColor: #7a43b6,@colorStop: 50%,@endColor: #c3325f)", b.getSelector());
 	}
-//	@Test
-//	public void renameMixin() {
-//		Block b = new Block(".box-shadow(@shadow)%.box-shadow(@shadowA, @shadowB:X, ...)");
-//		b.process();
-//		Assert.assertEquals("update", b.getAction());
-//		Assert.assertEquals(".box-shadow(@shadow)", b.getSelector());
-//		Assert.assertEquals(".box-shadow(@shadowA,@shadowB:X,...)", b.getupdatedSelector()[1]);
-//	}
+	@Test
+	public void renameMixin() {
+		Block b = new Block(".box-shadow(@shadow)%RENAME%.box-shadow(@shadowA, @shadowB:X, ...)");
+		b.process();
+		Assert.assertEquals("update", b.getAction());
+		Assert.assertEquals(".box-shadow(@shadow)", b.getSelector());
+		Assert.assertEquals(".box-shadow(@shadowA,@shadowB:X,...)", b.getupdatedSelector()[1]);
+	}
 	@Test
 	public void setSelector() {
 		Block b = new Block("  +  .form-emphasis");

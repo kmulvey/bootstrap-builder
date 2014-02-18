@@ -101,7 +101,7 @@ public class Main {
 
 		// ATC keeps track of what flights are still en route
 		// use this for debugging purposes
-		/*
+
     int running = 0;
     do {
       running = 0;
@@ -112,6 +112,6 @@ public class Main {
       }
       System.out.println("We have " + running + " running threads. ");
     } while (running > 0);
-    */
+
   }
 }
