@@ -96,6 +96,7 @@ public class BlockTest {
 		Assert.assertEquals(null, b.getAction());
 		Assert.assertEquals(".vertical-three-colors(@startColor: #00b3ee,@midColor: #7a43b6,@colorStop: 50%,@endColor: #c3325f)", b.getSelector());
 	}
+	// perhaps better integration tests would catch whats wrong here
 	@Test
 	public void renameMixin() {
 		Block b = new Block(".box-shadow(@shadow)%RENAME%.box-shadow(@shadowA, @shadowB:X, ...)");
