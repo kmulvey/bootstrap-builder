@@ -55,6 +55,14 @@ public class BlockTest {
 		Assert.assertEquals(2, b.getupdatedSelector().length);
 	}
 	@Test
+	public void replaceBlockSpacesTest() {
+		Block b = new Block(".form-emphasis   %    .form-basic    ");
+		b.process();
+		Assert.assertEquals("update", b.getAction());
+		Assert.assertEquals(".form-emphasis", b.getSelector());
+		Assert.assertEquals(2, b.getupdatedSelector().length);
+	}
+	@Test
 	public void quotedBlockTest() {
 		Block b = new Block("input[type=\"radio\"],  input[type=\"checkbox\"]");
 		b.process();

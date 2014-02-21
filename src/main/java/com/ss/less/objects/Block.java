@@ -26,7 +26,7 @@ public class Block extends LessObject {
 			logger.info("selector: " + selector + " set to be added.");
 		} else if (!src_file && selector.contains("%RENAME%")) {
 				action = "update";
-				updated_selector = selector.trim().replaceAll(",\\s*", ",").split("%RENAME%");
+				updated_selector = selector.replaceAll(",\\s*", ",").split("%RENAME%");
 				selector = updated_selector[0].trim();
 				logger.info("selector: " + selector + " to be updated.");
 		} else {
