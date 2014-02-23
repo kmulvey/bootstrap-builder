@@ -34,7 +34,7 @@ public class FileUtilTest {
 		Assert.assertEquals(false, file_contents.contains("block"));
 		Assert.assertEquals(false, file_contents.contains("single"));
 	}
-	
+
 	@Test
 	public void readNullFileTest() {
 		FileUtil f = new FileUtil();
@@ -42,7 +42,7 @@ public class FileUtilTest {
 		f.readFile(test_file);
 		// nothing happens here because the exception is caught in the try{}
 	}
-	
+
 	@Test
 	public void writeFileTest() {
 		FileUtil f = new FileUtil();
@@ -52,11 +52,11 @@ public class FileUtilTest {
 			@SuppressWarnings("resource")
 			String result = new Scanner(rand).useDelimiter("\\Z").next();
 			Assert.assertEquals("abc", result);
-		}
-		catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			Assert.fail("unable to read the file that was allegedly written");
 		}
 	}
+
 	@Test
 	public void writeFileDeniedTest() {
 		FileUtil f = new FileUtil();
