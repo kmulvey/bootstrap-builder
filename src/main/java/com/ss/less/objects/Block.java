@@ -27,7 +27,7 @@ public class Block extends LessObject {
 		} else if (!src_file && selector.contains("%")) {
 			if (!selector.matches(".*\\(.*%.*\\)")) {
 				action = "update";
-				updated_selector = selector.trim().replaceAll(",\\s*", ",").split("%");
+				updated_selector = selector.replaceAll(",\\s*", ",").split("%");
 				selector = updated_selector[0].trim();
 				logger.info("selector: " + selector + " to be updated.");
 			}
