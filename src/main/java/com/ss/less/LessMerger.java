@@ -1,4 +1,5 @@
 package com.ss.less;
+
 import java.util.Stack;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +27,7 @@ public class LessMerger {
 		Stack<String> tree = new Stack<String>();
 		processOverrideBlocks(override, tree);
 	}
+
 	// iterate through the override tree and find changes, then call applyUpdates to actually make them
 	public void processOverrideBlocks(Block b, Stack<String> tree) {
 		logger.entry();
@@ -35,7 +37,7 @@ public class LessMerger {
 			if (child instanceof Block) {
 				Block curr_block = (Block) child;
 				if (curr_block.action != null) {
-					if(!applyUpdates(original, curr_block, (Stack<String>) tree.clone())){
+					if (!applyUpdates(original, curr_block, (Stack<String>) tree.clone())) {
 						logger.warn("did not find: " + tree.firstElement());
 					}
 					if (curr_block.action.equals("update")) {
@@ -46,7 +48,7 @@ public class LessMerger {
 				}
 			} else {
 				// this is a property, i wish we didnt need this if block
-				if(!applyUpdates(original, child, (Stack<String>) tree.clone())){
+				if (!applyUpdates(original, child, (Stack<String>) tree.clone())) {
 					logger.warn("did not find: " + tree.toString());
 				}
 			}
@@ -54,7 +56,7 @@ public class LessMerger {
 		tree.remove(tree.size() - 1);
 	}
 
-	// this is a misnamed function, when called the changes have already been found.  It is now going to search the original to apply the changes
+	// this is a misnamed function, when called the changes have already been found. It is now going to search the original to apply the changes
 	public boolean applyUpdates(Block b, LessObject changes, Stack<String> tree) {
 		logger.entry();
 		tree.remove("override");
@@ -66,25 +68,25 @@ public class LessMerger {
 					// find the right block
 					if (curr_block.getSelector().equals(tree.firstElement())) {
 						// this is premature because there may be more than one block with the same selector
-						//tree.remove(tree.firstElement());
+						// tree.remove(tree.firstElement());
 
 						// Recursively go through all sub-blocks
 						if (tree.size() > 1) {
 							Stack<String> sub_tree = (Stack<String>) tree.clone();
 							sub_tree.remove(sub_tree.firstElement());
 							// lets get out of here after adding the child
-							if(applyUpdates(curr_block, changes, sub_tree)){
+							if (applyUpdates(curr_block, changes, sub_tree)) {
 								return logger.exit(true);
 							}
-							
+
 						} else if (tree.size() == 1) {
 							// Process blocks
 							if (changes instanceof Block) {
 								Block change_bock = (Block) changes;
-								if(findBlock(curr_block, change_bock)){
+								if (findBlock(curr_block, change_bock)) {
 									logger.info(change_bock.action + ": " + change_bock.getSelector());
 									return logger.exit(true);
-								}else{
+								} else {
 									logger.info("keep looking for " + change_bock.getSelector());
 									continue;
 								}
@@ -115,7 +117,7 @@ public class LessMerger {
 									}
 									// this is premature because there may be another block with the same selector further down the loop
 									logger.warn("did not find: " + p.getName() + ": " + p.getValue());
-									//return logger.exit(false);
+									// return logger.exit(false);
 								}
 							}
 						}
