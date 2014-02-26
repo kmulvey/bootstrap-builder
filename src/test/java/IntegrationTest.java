@@ -11,7 +11,6 @@ import com.ss.less.LessParser;
 import com.ss.less.utils.FileUtil;
 
 @RunWith(JUnit4.class)
-
 public class IntegrationTest {
 	@Test
 	public void merge() {
@@ -29,7 +28,7 @@ public class IntegrationTest {
 		lm.merge();
 		Assert.assertEquals(expected, orig.toString());
 	}
-	
+
 	@Test
 	public void whiteSpace() {
 		String expected = ".well-large{padding: 24px;.border-radius(6px);}.well-sm{font-size: 10px;border: 3px;padding: 5px;color: red;}.well-large{padding: 24px;.border-radius(6px);}";
@@ -46,7 +45,7 @@ public class IntegrationTest {
 		lm.merge();
 		Assert.assertEquals(expected, orig.toString());
 	}
-	
+
 	@Test
 	public void comments() {
 		String expected = ".well-large{padding: 24px;.border-radius(6px);}.well-sm{font-size: 10px;border: 3px;padding: 5px;color: red;}.well-large{padding: 24px;.border-radius(6px);}";
