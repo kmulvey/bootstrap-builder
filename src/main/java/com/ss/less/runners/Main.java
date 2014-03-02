@@ -12,12 +12,13 @@ import org.apache.commons.cli.Options;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.ss.exceptions.MissingArgumentException;
 import com.ss.less.utils.FileUtil;
 
 public class Main {
 
 	// there is some logic in here ... and because its the main() its untestable, that should be moved if possible
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MissingArgumentException {
 		Logger logger = LogManager.getLogger(Main.class.getName());
 		String source_dir = "", override_dir = "", output_dir = "";
 		CommandLineParser parser = new GnuParser();
@@ -42,7 +43,7 @@ public class Main {
 			else {
 				logger.fatal("Source directory must be specified.");
 				formatter.printHelp( "bootstrap-builder", options );
-				return;
+				throw new MissingArgumentException("Source directory must be specified.");
 			}
 
 			// override dir
@@ -52,7 +53,7 @@ public class Main {
 			else {
 				logger.fatal("Override directory must be specified.");
 				formatter.printHelp( "bootstrap-builder", options );
-				return;
+				throw new MissingArgumentException("Override directory must be specified.");
 			}
 
 			// work dir
@@ -62,7 +63,7 @@ public class Main {
 			else {
 				logger.fatal("Work directory must be specified.");
 				formatter.printHelp( "bootstrap-builder", options );
-				return;
+				throw new MissingArgumentException("Work directory must be specified.");
 			}
 		}
 		catch (org.apache.commons.cli.ParseException e) {
