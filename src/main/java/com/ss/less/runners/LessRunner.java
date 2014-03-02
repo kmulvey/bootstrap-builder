@@ -11,7 +11,7 @@ public class LessRunner implements Runnable {
 	private String override, original, file_name, output_dir;
 	private Logger logger = LogManager.getLogger(LessRunner.class.getName());
 
-	LessRunner(String orig, String over, String f_name, String o_dir) {
+	public LessRunner(String orig, String over, String f_name, String o_dir) {
 		this.override = over;
 		this.original = orig;
 		this.output_dir = o_dir;
