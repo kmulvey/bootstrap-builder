@@ -85,4 +85,19 @@ public class LessParserTest {
 		Assert.assertEquals(4, prop);
 		Assert.assertEquals(1, block);
 	}
+	@Test
+	public void rootMixin() {
+		LessParser orig = new LessParser(".box-shadow(@shadowA, @shadowB:X, ...){padding: 24px;.border-radius(6px);}");
+		orig.parseLess(true);
+
+		// how many blocks are in the file?
+		Assert.assertEquals(1, orig.getLessFile().size());
+
+		// look more deeply into the first block
+		Assert.assertEquals(Block.class, orig.getLessFile().get(0).getClass());
+		
+		// count number of children in first block
+		Block first_ele = (Block) orig.getLessFile().get(0);
+		Assert.assertEquals(2, first_ele.children.size());
+	}
 }
