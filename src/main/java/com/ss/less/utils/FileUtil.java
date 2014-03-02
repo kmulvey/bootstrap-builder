@@ -22,6 +22,10 @@ public class FileUtil {
 		logger.entry();
 		ArrayList<File> files= new ArrayList<File>();
 		File dir = new File(path);
+		if(dir.listFiles() == null){
+			logger.fatal("could not find directory " + path);
+			System.exit(1);
+		}
 		 for (File child : dir.listFiles()) {
 			 files.add(child);
 		 }
