@@ -1,4 +1,5 @@
 package com.ss.less;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -13,7 +14,6 @@ public class LessParser {
 	private String file;
 	private ArrayList<LessObject> lessFile;
 	private Logger logger = LogManager.getLogger(LessParser.class.getName());
-
 
 	public LessParser(String f) {
 		file = f;
@@ -33,10 +33,10 @@ public class LessParser {
 			char c = file.charAt(i);
 
 			// detect twig loop variables
-			if(c == '{' && look_behind == '@'){
+			if (c == '{' && look_behind == '@') {
 				twig_var = true;
 			}
-			
+
 			// set the selector
 			if (c == '{' && twig_var == false) {
 				// up periscope DIVE DIVE DIVE
@@ -44,12 +44,13 @@ public class LessParser {
 					depth_stack.push(curr_block);
 				}
 				curr_block = new Block(buffer);
-				if(src_file) curr_block.setSrcFile(src_file);
+				if (src_file)
+					curr_block.setSrcFile(src_file);
 				curr_block.process();
 				buffer = "";
 				curly_count++;
 			} else if (c == '}') {
-				if(twig_var == true){
+				if (twig_var == true) {
 					twig_var = false;
 					// we are leaving the party early so we need to shake some babies and kiss some hands
 					buffer += c;
@@ -75,9 +76,9 @@ public class LessParser {
 			// set the property
 			else if (c == ';' && paren_count == 0) {
 				Property prop = new Property(buffer);
-				if(curly_count == 0 && prop.isMixin()){
+				if (curly_count == 0 && prop.isMixin()) {
 					lessFile.add(prop);
-				}else{
+				} else {
 					curr_block.children.add(prop);
 				}
 				buffer = "";
@@ -105,11 +106,11 @@ public class LessParser {
 		StringBuilder file = new StringBuilder();
 
 		for (int i = 0; i < lessFile.size(); i++) {
-			if(lessFile.get(i) instanceof Block){
+			if (lessFile.get(i) instanceof Block) {
 				file.append(printBlock((Block) lessFile.get(i)));
 			}
 			// this is a mixin at the root level
-			else{
+			else {
 				Property p = (Property) lessFile.get(i);
 				file.append(p.getName() + ";");
 			}
@@ -127,18 +128,17 @@ public class LessParser {
 				block_str.append(printBlock((Block) b.children.get(i))); // if its a block recursively process it
 			else {
 				Property p = (Property) b.children.get(i);
-				if(p.isMixin()) block_str.append(p.getName()).append(";");
-				else block_str.append(p.getName()).append(": ").append(p.getValue()).append(";");
+				if (p.isMixin())
+					block_str.append(p.getName()).append(";");
+				else
+					block_str.append(p.getName()).append(": ").append(p.getValue()).append(";");
 			}
 		}
 		block_str.append("}");
 		return logger.exit(block_str.toString());
 	}
-	
-	public String getFile(){
-		return file;
-	}
-	public ArrayList<LessObject> getLessFile(){
+
+	public ArrayList<LessObject> getLessFile() {
 		return lessFile;
 	}
 }
