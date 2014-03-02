@@ -14,10 +14,10 @@ public class LessRunnerTest {
 		Thread worker = new Thread(task);
 		worker.setName("test runner");
 		worker.start();
-		
+
 		// wait for thread to complete
-		while(true){
-			if(!worker.isAlive()){
+		while (true) {
+			if (!worker.isAlive()) {
 				break;
 			}
 		}
