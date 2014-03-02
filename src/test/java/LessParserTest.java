@@ -86,7 +86,7 @@ public class LessParserTest {
 		Assert.assertEquals(1, block);
 	}
 	@Test
-	public void rootMixin() {
+	public void mixin() {
 		LessParser orig = new LessParser(".box-shadow(@shadowA, @shadowB:X, ...){padding: 24px;.border-radius(6px);}");
 		orig.parseLess(true);
 
@@ -102,5 +102,13 @@ public class LessParserTest {
 		
 		// toString should show input
 		Assert.assertEquals(".box-shadow(@shadowA,@shadowB:X,...){padding: 24px;.border-radius(6px);}", orig.toString());
+	}
+	@Test
+	public void rootLevelMixin() {
+		LessParser orig = new LessParser(".button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);");
+		orig.parseLess(true);
+		
+		// toString should show input
+		Assert.assertEquals(".button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);", orig.toString());
 	}
 }
