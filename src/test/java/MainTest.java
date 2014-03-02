@@ -12,6 +12,7 @@ public class MainTest {
 		String cwd = System.getProperty("user.dir") + "/src/test/resources/less/mainTest";
 		Main.main(new String[] { "--source", cwd, "--override", cwd + "/override", "--workdir", cwd + "/work" });
 	}
+
 	@Test
 	public void missingSource() {
 		// testing main functions is a fools errand, at least if we break something this thing will die hard
@@ -24,6 +25,7 @@ public class MainTest {
 			Assert.assertEquals("Source directory must be specified.", e.getMessage());
 		}
 	}
+
 	@Test
 	public void missingOverride() {
 		// testing main functions is a fools errand, at least if we break something this thing will die hard
@@ -36,6 +38,7 @@ public class MainTest {
 			Assert.assertEquals("Override directory must be specified.", e.getMessage());
 		}
 	}
+
 	@Test
 	public void missingWork() {
 		// testing main functions is a fools errand, at least if we break something this thing will die hard
