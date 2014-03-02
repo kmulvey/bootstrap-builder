@@ -67,6 +67,7 @@ public class Main {
 			}
 		}
 		catch (org.apache.commons.cli.ParseException e) {
+			// its pretty hard to get here
 			logger.fatal(e.getMessage());
 			formatter.printHelp( "bootstrap-builder", options );
 			return;
