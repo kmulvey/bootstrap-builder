@@ -138,10 +138,6 @@ public class LessParser {
 		return logger.exit(block_str.toString());
 	}
 
-	public String getFile() {
-		return file;
-	}
-
 	public ArrayList<LessObject> getLessFile() {
 		return lessFile;
 	}
