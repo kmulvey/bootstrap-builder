@@ -99,5 +99,8 @@ public class LessParserTest {
 		// count number of children in first block
 		Block first_ele = (Block) orig.getLessFile().get(0);
 		Assert.assertEquals(2, first_ele.children.size());
+		
+		// toString should show input
+		Assert.assertEquals(".box-shadow(@shadowA,@shadowB:X,...){padding: 24px;.border-radius(6px);}", orig.toString());
 	}
 }
