@@ -1,0 +1,59 @@
+//
+// Wells
+// --------------------------------------------------
+
+
+.well {
+-  margin-bottom: 20px;
+-  background-color: @wellBackground;
+-  border: 1px solid darken(@well-bg, 7%);
++  border: 1px solid darken(@wellBackground, 70%);
+  blockquote {
+-    border-color: #ddd;
++    border-color: rgba(255, 255, 255);
++	&:focus {
+  		margin: 10px;
+  		.border-radius(6px);
+	}
+  }
+}
+
+
++.well-large {
+  padding: 24px;
+  .border-radius(6px);
+}
+
+
+-.well-sm {
+}
+
++.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: -20px;
+}
+
+@media (min-width: @screen-sm) {
+-	padding: 9px;
++	margin: 10px;
++	.box-sizing(border-box);
+}
+
+ 
+.btn-primary,
+.btn-warning,
+.btn-danger,
+.btn-info,
+.btn-success,
+.btn-inverse
+%
+.btn-primary,
+.btn-info,
+.btn-success,
+.btn-inverse {
+-	background: red;
++	background: green;
+}
