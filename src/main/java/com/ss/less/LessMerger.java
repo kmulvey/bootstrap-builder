@@ -43,10 +43,12 @@ public class LessMerger {
 					if (curr_block.action.equals("update")) {
 						processOverrideBlocks((Block) child, tree);
 					}
-				} else {
+				}
+				else {
 					processOverrideBlocks((Block) child, tree);
 				}
-			} else {
+			}
+			else {
 				// this is a property, i wish we didnt need this if block
 				if (!applyUpdates(original, child, (Stack<String>) tree.clone())) {
 					logger.warn("did not find: " + tree.toString());
@@ -79,14 +81,16 @@ public class LessMerger {
 								return logger.exit(true);
 							}
 
-						} else if (tree.size() == 1) {
+						}
+						else if (tree.size() == 1) {
 							// Process blocks
 							if (changes instanceof Block) {
 								Block change_bock = (Block) changes;
 								if (findBlock(curr_block, change_bock)) {
 									logger.info(change_bock.action + ": " + change_bock.getSelector());
 									return logger.exit(true);
-								} else {
+								}
+								else {
 									logger.info("keep looking for " + change_bock.getSelector());
 									continue;
 								}
@@ -96,7 +100,7 @@ public class LessMerger {
 							// Process props
 							if (changes instanceof Property) {
 								Property p = (Property) changes;
-								if(p.action == null){
+								if (p.action == null) {
 									logger.fatal("You may have forgotten an operator (+/-) for the property: " + p.getName() + ": " + p.getValue());
 									System.exit(1);
 								}
@@ -145,7 +149,8 @@ public class LessMerger {
 			source.children.add(changes);
 			logger.info("added: " + changes.getSelector());
 			return logger.exit(true);
-		} else {
+		}
+		else {
 			// loop to find the correct block to remove
 			for (int j = 0; j < source.children.size(); j++) {
 				if (source.children.get(j) instanceof Block) {
@@ -155,7 +160,8 @@ public class LessMerger {
 							source.children.remove(j);
 							logger.info("removed: " + changes.getSelector());
 							return logger.exit(true);
-						} else if (changes.action.equals("update")) {
+						}
+						else if (changes.action.equals("update")) {
 							changes.setSelector(changes.getupdatedSelector()[1]);
 							loop_block.setSelector(changes.getSelector());
 							logger.info("updated: " + changes.getSelector());
