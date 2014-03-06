@@ -96,6 +96,10 @@ public class LessMerger {
 							// Process props
 							if (changes instanceof Property) {
 								Property p = (Property) changes;
+								if(p.action == null){
+									logger.fatal("You may have forgotten an operator (+/-) for the property: " + p.getName() + ": " + p.getValue());
+									System.exit(1);
+								}
 								// adds
 								if (p.action.equals("add")) {
 									curr_block.children.add(p);
