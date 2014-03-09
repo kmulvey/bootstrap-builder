@@ -38,7 +38,9 @@ public class LessMerger {
 				Block curr_block = (Block) child;
 				if (curr_block.action != null) {
 					if (!applyUpdates(original, curr_block, (Stack<String>) tree.clone())) {
-						logger.warn("did not find: " + tree.firstElement());
+						if(tree.size() == 1 && tree.firstElement() != "override"){
+							logger.warn("did not find: " + tree.firstElement());
+						}
 					}
 					if (curr_block.action.equals("update")) {
 						processOverrideBlocks((Block) child, tree);
@@ -51,7 +53,7 @@ public class LessMerger {
 			else {
 				// this is a property, i wish we didnt need this if block
 				if (!applyUpdates(original, child, (Stack<String>) tree.clone())) {
-					logger.warn("did not find: " + tree.toString());
+					logger.warn("did not find selector: " + tree.toString());
 				}
 			}
 		}
@@ -124,7 +126,7 @@ public class LessMerger {
 										}
 									}
 									// this is premature because there may be another block with the same selector further down the loop
-									logger.warn("did not find: " + p.getName() + ": " + p.getValue());
+									logger.warn("did not find: " + p.getName() + ": " + p.getValue() + " in " + tree.firstElement());
 									// return logger.exit(false);
 								}
 							}
