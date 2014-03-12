@@ -105,4 +105,4 @@ note: do not put comments at the end of a line, put them on their own line.  Whi
 
 ## Running tests
 
-* `mvn test` 
+* `mvn test`
