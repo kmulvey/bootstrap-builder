@@ -46,12 +46,10 @@ public class LessMerger {
 					if (curr_block.action.equals("update")) {
 						processOverrideTree((Block) child, tree);
 					}
-				}
-				else {
+				} else {
 					processOverrideTree((Block) child, tree);
 				}
-			}
-			else {
+			} else {
 				// PROPERTY !!
 				if(!applyUpdates(original, child, (Stack<String>) tree.clone())){
 					logger.warn("did not find selector: " + tree.toString());
@@ -97,6 +95,7 @@ public class LessMerger {
 							// Process props
 							if (changes instanceof Property) {
 								Property p = (Property) changes;
+								
 								if (p.action == null) {
 									logger.fatal("You may have forgotten an operator (+/-) for the property: " + p.getName() + ": " + p.getValue());
 									System.exit(1);
@@ -141,7 +140,6 @@ public class LessMerger {
 		return logger.exit(false);
 	}
 
-	// this finds and applys changes to blocks
 	public boolean processBlockChanges(Block source, Block changes) {
 		// add block to root level
 		if (changes.action.equals("add")) {
