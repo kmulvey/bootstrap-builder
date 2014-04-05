@@ -48,7 +48,7 @@ public class LessMerger {
 					}
 				}
 				else {
-					processOverrideBlocks((Block) child, tree);
+					processOverrideTree((Block) child, tree);
 				}
 			}
 			else {
