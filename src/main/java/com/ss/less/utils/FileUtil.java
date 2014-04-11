@@ -27,6 +27,7 @@ public class FileUtil {
 			System.exit(1);
 		}
 		 for (File child : dir.listFiles()) {
+			 if(child.getName().contains(".swp")) continue;
 			 files.add(child);
 		 }
 		return logger.exit(files);
