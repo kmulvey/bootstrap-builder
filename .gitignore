@@ -9,5 +9,9 @@ target/generated-sources
 target/maven-status
 target/surefire-reports
 target/test-classes
+target/cobertura
+target/coveralls.json
+target/generated-classes
+target/site
 
 bin

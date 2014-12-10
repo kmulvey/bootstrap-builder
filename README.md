@@ -73,8 +73,8 @@ The format of this file looks similar to a diff file and tweaking an actual diff
 		}
 }
 +.well-large {
-		padding: 24px;
-		.border-radius(6px);
+	padding: 24px;
+	.border-radius(6px);
 }
 -.well-small {
 }
