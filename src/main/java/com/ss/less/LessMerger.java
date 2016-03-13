@@ -39,9 +39,7 @@ public class LessMerger {
 				Block curr_block = (Block) child;
 				if (curr_block.action != null) {
 					if (!applyUpdates(original, curr_block, (Stack<String>) tree.clone())) {
-						if(tree.size() == 1 && tree.firstElement() != "override"){
-							logger.warn("did not find: " + tree.firstElement());
-						}
+						logger.warn("did not find: " + tree + " " + curr_block.getSelector());
 					}
 					if (curr_block.action.equals("update")) {
 						processOverrideTree((Block) child, tree);
